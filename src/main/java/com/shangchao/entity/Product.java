@@ -1,14 +1,18 @@
 package com.shangchao.entity;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.io.Serializable;
+
 @Data//使用@Data注解，实体类可以省略get set方法
 @Document(collection = "product")//在实体添加@Document注解，collection= "对应的表名"
-public class Product {
-    @Field("id")//在属性上添加@Filed注解，值为对应的字段名
-    private Long id;
+public class Product implements Serializable {
+    @Id//在属性上添加@Filed注解，值为对应的字段名
+//    @Field("_id")
+    private String id;
 
     @Field("imgsrc")
     private String imgsrc;
@@ -34,13 +38,13 @@ public class Product {
     @Field("discountR")
     private String discountR;
 
-    @Field("title")
+    @Field("disShopNo1")
     private String disShopNo1;
 
-    @Field("title")
+    @Field("star")
     private String star;
 
-    @Field("title")
+    @Field("num")
     private String num;
 
 }
