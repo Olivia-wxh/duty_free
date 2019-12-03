@@ -1,9 +1,8 @@
 package com.shangchao.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.shangchao.dao.ProductRepository;
+import com.shangchao.repository.ProductRepository;
 import com.shangchao.entity.Product;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

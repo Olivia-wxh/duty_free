@@ -1,4 +1,4 @@
-package com.shangchao.dao;
+package com.shangchao.repository;
 
 import com.shangchao.entity.Product;
 import org.springframework.data.mongodb.repository.MongoRepository;

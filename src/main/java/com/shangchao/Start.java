@@ -8,7 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication
+@MapperScan(value = {"com.shangchao.dao"})
 //@ComponentScan(basePackages = {"com.shangchao.*"})
 //@EnableTransactionManagement
 public class Start {
