@@ -6,6 +6,7 @@ import com.shangchao.entity.User;
 import com.shangchao.service.IUserService;
 import com.shangchao.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +26,10 @@ import java.util.Map;
 public class LoginController {
     @Autowired
     private IUserService userService;
-    @RequestMapping(value = "/userLogin", method = RequestMethod.GET)
-    public Map ajaxLogin(String username,String password,HttpServletResponse response) {
+    @RequestMapping(value = "/userLogin", method = RequestMethod.POST)
+    public Map ajaxLogin(@RequestBody Map<String,String> loginInfo, HttpServletResponse response) {
+        String username=loginInfo.get("username");
+        String password=loginInfo.get("password");
         Map result = new HashMap<>(4);
         User vo = this.userService.getUserByUserName(username);
         if (null != vo && vo.getPassword().equals(password)) {

@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * code and msg
- * Created by Administrator on 2018/11/13.
  */
 public enum CodeAndMsgEnum {
     SUCCESS(100200, "请求受理成功！"),

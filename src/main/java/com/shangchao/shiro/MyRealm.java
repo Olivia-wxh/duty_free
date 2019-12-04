@@ -16,9 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * @author wxl
- * @create 2019-12-03 09:43
- * @desc
  **/
 public class MyRealm extends AuthorizingRealm {
 

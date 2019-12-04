@@ -10,9 +10,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import java.util.Date;
 
 /**
- * @author wxl
- * @create 2019-12-03 09:31
- * @desc JWT工具类
  **/
 public class JwtUtil {
 

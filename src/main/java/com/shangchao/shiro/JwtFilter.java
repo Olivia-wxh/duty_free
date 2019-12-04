@@ -20,9 +20,6 @@ import java.io.IOException;
 
 
 /**
- * @author wxl
- * @create 2019-12-03 09:34
- * @desc
  **/
 public class JwtFilter extends BasicHttpAuthenticationFilter {
     @Value("${jwt.anonymous.urls}")
@@ -36,6 +33,9 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
             String[] anonUrls = anonymousStr.split(",");
             //匿名可访问的url
             for (int i = 0; i < anonUrls.length; i++) {
+                if("nonUrls".equals(anonUrls[i])){
+                    return true;
+                }
                 if (contextPath.contains(anonUrls[i])) {
                     return true;
                 }

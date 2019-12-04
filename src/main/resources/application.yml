@@ -12,3 +12,49 @@ spring:
       port: 27017
 #数据库名称
       database: shangchao
+#redis
+#mySql
+  datasource:
+          driver-class-name: com.mysql.jdbc.Driver
+          hikari:
+              auto-commit: true
+              connection-test-query: SELECT 1
+              connection-timeout: 30000
+              idle-timeout: 30000
+              max-lifetime: 1800000
+              maximum-pool-size: 15
+              minimum-idle: 5
+              pool-name: ShangchaoHikariCP
+          password: root
+          type: com.zaxxer.hikari.HikariDataSource
+          url: jdbc:mysql://127.0.0.1:3306/shangchao?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+          username: root
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    lettuce:
+      pool:
+        max-active: 8
+        min-idle: 0
+        max-idle: 8
+#mybatis
+mybatis:
+  type-aliases-package: com.shangchao.entity
+  mapper-locations: classpath:/mappers/**.xml
+shiro:
+    redis:
+        cacheLive: 30
+        cachePrefix: 'shiro_redis_cache:'
+        kickoutPrefix: 'shiro_redis_kickout:'
+        sessionLive: 30
+        sessionPrefix: 'shiro_redis_session:'
+#验证码过期5分钟;redis中JWTToken过期时间
+redis:
+    identifyingTokenExpireTime: 5
+    refreshJwtTokenExpireTime: 30
+jwt:
+    anonymous:
+        urls: nonUrls,userLogin, logout, captcha
+    tokenExpireTime: 5

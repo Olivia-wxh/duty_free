@@ -7,8 +7,7 @@ import com.shangchao.utils.PaginationEntity;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Administrator on 2018/2/3.
+/*
  */
 public class AbstractService {
     public Map<String, Object> handleParams(PaginationEntity<? extends PaginationEntity> page) {

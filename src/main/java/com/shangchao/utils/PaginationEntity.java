@@ -3,7 +3,6 @@ package com.shangchao.utils;
 import java.io.Serializable;
 
 /**
- * Created by Administrator on 2018/1/4.
  */
 public class PaginationEntity<T> implements Serializable {
     private int pageSize = 20;// 每页大小

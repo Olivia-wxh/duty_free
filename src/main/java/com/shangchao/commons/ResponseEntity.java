@@ -5,7 +5,6 @@ import java.util.Map;
 
 /**
  *
- * Created by Administrator on 2018/11/13.
  */
 public class ResponseEntity {
     /**

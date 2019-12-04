@@ -16,7 +16,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by Administrator on 2017/10/11.
  */
 @Service("userService")
 public class UserServiceImpl extends AbstractService implements IUserService {

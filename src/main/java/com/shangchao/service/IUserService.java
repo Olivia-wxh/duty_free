@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2017/10/11.
  */
 public interface IUserService {
     User getUserByUserName(String userName);
