@@ -12,7 +12,10 @@ spring:
       port: 27017
 #数据库名称
       database: shangchao
-#redis
+
+  main:
+    allow-bean-definition-overriding: true
+  #redis
 #mySql
   datasource:
           driver-class-name: com.mysql.jdbc.Driver
@@ -25,7 +28,7 @@ spring:
               maximum-pool-size: 15
               minimum-idle: 5
               pool-name: ShangchaoHikariCP
-          password: root
+          password: Dwzc_123@
           type: com.zaxxer.hikari.HikariDataSource
           url: jdbc:mysql://127.0.0.1:3306/shangchao?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
           username: root

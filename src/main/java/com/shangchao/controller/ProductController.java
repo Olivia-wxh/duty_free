@@ -31,7 +31,7 @@ public class ProductController {
     }
 
     /**
-     * 查询所有产品信息
+     * 根据ID查询单品信息
      * @return
      */
     @GetMapping("/id")
