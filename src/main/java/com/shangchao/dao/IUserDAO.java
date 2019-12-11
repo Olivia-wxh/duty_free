@@ -29,5 +29,7 @@ public interface IUserDAO {
 
     public List<User> listUserByNams(Object[] names);
 
+    public void saveUser(User user);
+
 
 }

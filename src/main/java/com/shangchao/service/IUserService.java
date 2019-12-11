@@ -23,4 +23,6 @@ public interface IUserService {
     boolean removeJWTToken(String userName);
 
     List<User> listOnLineUser();
+
+   void saveUser(User user);
 }

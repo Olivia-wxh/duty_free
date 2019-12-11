@@ -115,4 +115,8 @@
         </foreach>
     </select>
 
+    <insert id="saveUser" parameterType="com.shangchao.entity.User">
+        INSERT INTO user(user_name,password) values( #{userName,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR})
+    </insert>
+
 </mapper>

@@ -2,12 +2,17 @@ package com.shangchao.shiro;
 
 import com.shangchao.commons.CodeAndMsgEnum;
 import com.shangchao.commons.CommonConstant;
+import com.shangchao.entity.User;
+import com.shangchao.service.IUserService;
 import com.shangchao.utils.JwtUtil;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +29,10 @@ import java.io.IOException;
 public class JwtFilter extends BasicHttpAuthenticationFilter {
     @Value("${jwt.anonymous.urls}")
     private String anonymousStr;
+    @Autowired
+    RedisTemplate redisTemplate;
+    @Autowired
+    private IUserService userService;
 
 
     @Override
@@ -87,19 +96,19 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
         String userName = JwtUtil.getUsername(oldToken);
         String key = CommonConstant.JWT_TOKEN + userName;
         //获取redis tokenStr
-//        String redisUserInfo = (String) redisTemplate.opsForValue().get(key);
-//        if (redisUserInfo != null) {
-//            if (oldToken.equals(redisUserInfo)) {
-//                SecurityProperties.User vo = this.userService.getUserByUserName(userName);
-//                //重写生成token(刷新)
-//                String newTokenStr = JWTUtil.sign(vo.getUserName(), vo.getPassword());
-//                JWTToken jwtToken = new JWTToken(newTokenStr);
-//                userService.addTokenToRedis(userName, newTokenStr);
-//                SecurityUtils.getSubject().login(jwtToken);
-//                response.setHeader("Authorization", newTokenStr);
-//                return true;
-//            }
-//        }
+        String redisUserInfo = (String) redisTemplate.opsForValue().get(key);
+        if (redisUserInfo != null) {
+            if (oldToken.equals(redisUserInfo)) {
+                User vo = this.userService.getUserByUserName(userName);
+                //重写生成token(刷新)
+                String newTokenStr = JwtUtil.sign(vo.getUserName(), vo.getPassword());
+                JwtToken jwtToken = new JwtToken(newTokenStr);
+                userService.addTokenToRedis(userName, newTokenStr);
+                SecurityUtils.getSubject().login(jwtToken);
+                response.setHeader("Authorization", newTokenStr);
+                return true;
+            }
+        }
         return false;
     }
 

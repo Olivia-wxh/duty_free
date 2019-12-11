@@ -102,4 +102,9 @@ public class UserServiceImpl extends AbstractService implements IUserService {
         }
         return userDAO.listUserByNams(list.toArray());
     }
+
+    @Override
+    public void saveUser(User user) {
+        userDAO.saveUser(user);
+    }
 }
