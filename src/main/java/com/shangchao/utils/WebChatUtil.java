@@ -1,7 +1,10 @@
 package com.shangchao.utils;
 
 import com.shangchao.entity.WebChatEntity;
+import com.shangchao.service.impl.UserServiceImpl;
 import net.sf.json.JSONObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
@@ -14,6 +17,7 @@ import java.util.Formatter;
 import java.util.Map;
 
 public class WebChatUtil {
+    private static Logger log = LogManager.getLogger(WebChatUtil.class);
     public static WebChatEntity getWebChatEntity(String url) {
         WebChatEntity wx = new WebChatEntity();
         String access_token = getAccessToken();
@@ -77,10 +81,15 @@ public class WebChatUtil {
             byte[] jsonBytes = new byte[size];
             is.read(jsonBytes);
             String message = new String(jsonBytes, "UTF-8");
-            JSONObject demoJson = JSONObject.fromObject(message);
-            ticket = demoJson.getString("ticket");
+            JSONObject ticketJson = JSONObject.fromObject(message);
+            if(ticketJson.get("errcode")!=null){
+                log.error("微信分享获取ticket失败：{},{}",ticketJson.get("errcode"),ticketJson.get("errmsg"));
+            }
+
+            ticket = ticketJson.getString("ticket");
             is.close();
         } catch (Exception e) {
+            log.error("微信分享获取ticket异常：{}",e.getMessage());
             e.printStackTrace();
         }
         return ticket;
