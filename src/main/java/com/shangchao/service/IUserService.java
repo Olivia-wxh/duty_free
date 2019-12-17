@@ -4,6 +4,7 @@ package com.shangchao.service;
 
 import com.shangchao.entity.User;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -25,4 +26,6 @@ public interface IUserService {
     List<User> listOnLineUser();
 
    void saveUser(User user);
+
+   Map weChatLogin(String code,HttpServletResponse response);
 }
