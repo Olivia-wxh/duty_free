@@ -10,10 +10,7 @@ import com.shangchao.entity.User;
 import com.shangchao.service.IUserService;
 import com.shangchao.service.abs.AbstractService;
 import com.shangchao.sm.SM3Digest;
-import com.shangchao.utils.ApiUtil;
-import com.shangchao.utils.AuthUtil;
-import com.shangchao.utils.JwtUtil;
-import com.shangchao.utils.RandomUtil;
+import com.shangchao.utils.*;
 import com.sun.deploy.net.HttpResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -132,8 +129,8 @@ public class UserServiceImpl extends AbstractService implements IUserService {
     public Map weChatLogin(String code, HttpServletResponse response) {
         try {
             //通过第一步获得的code获取微信授权信息
-            String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + AuthUtil.APPID + "&secret="
-                    + AuthUtil.APPSECRET + "&code=" + code + "&grant_type=authorization_code";
+            String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + ConfigUtil.getCommonYml("webchat.webChatAppId")+ "&secret="
+                    +ConfigUtil.getCommonYml("webchat.webChatAppSecret") + "&code=" + code + "&grant_type=authorization_code";
             JSONObject jsonObject = AuthUtil.doGetJson(url);
             String openid = jsonObject.getString("openid");
             String token = jsonObject.getString("access_token");

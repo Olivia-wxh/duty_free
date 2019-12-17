@@ -1,6 +1,7 @@
 package com.shangchao.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,8 +15,8 @@ import java.net.URL;
  * 微信授权登录调用Util
  */
 public class AuthUtil {
-    public static final String APPID = "wx299710c8b6e46b4b";//自己的微信APPID
-    public static final String APPSECRET = "wx299710c8b6e46b4b";//自己的微信APPSECRET
+//    public static final String APPID = "wx299710c8b6e46b4b";//自己的微信APPID
+//    public static final String APPSECRET = "wx299710c8b6e46b4b";//自己的微信APPSECRET
 
     public static JSONObject doGetJson(String URL) throws IOException {
         JSONObject jsonObject = null;
