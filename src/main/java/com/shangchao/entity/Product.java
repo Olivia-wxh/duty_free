@@ -2,6 +2,7 @@ package com.shangchao.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -12,7 +13,7 @@ import java.io.Serializable;
 public class Product implements Serializable {
     @Id//在属性上添加@Filed注解，值为对应的字段名
 //    @Field("_id")
-    private String id;
+    private Long id;
 
     @Field("imgsrc")
     private String imgsrc;
@@ -46,5 +47,9 @@ public class Product implements Serializable {
 
     @Field("num")
     private String num;
+
+    //引用专题信息
+    @DBRef
+    private Topic topic;
 
 }
