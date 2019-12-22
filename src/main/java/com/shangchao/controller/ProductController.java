@@ -42,4 +42,16 @@ public class ProductController {
         jo.put("product", product);
         return jo;
     }
+
+    /**
+     * 根据主题ID查询产品信息
+     * @return
+     */
+    @GetMapping("/topicId")
+    public JSONObject getByTopic(Long topicId){
+        JSONObject jo = new JSONObject();
+        List<Product> product = productService.getByTopic(topicId);
+        jo.put("product", product);
+        return jo;
+    }
 }

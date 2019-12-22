@@ -17,7 +17,9 @@ public class Topic implements Serializable {
 
     private String topicName;
 
+    private Integer isDelete;//0表示未删除/上架，1表示删除/下架；
+
     //引用商品信息
     @DBRef
-    private List<Product> students;
+    private List<Product> products;
 }
