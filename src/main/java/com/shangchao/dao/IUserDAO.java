@@ -14,6 +14,7 @@ import java.util.Map;
 @Repository
 public interface IUserDAO {
     public User findByName(String userName);
+    public User findByOpenId(String openId);
 
     public List<User> getAllUser(Map<String, Object> param);
 

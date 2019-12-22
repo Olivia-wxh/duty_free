@@ -20,6 +20,12 @@ public class User extends PaginationEntity implements Serializable{
 	private String sToken;
 	private String textStr;
 
+
+
+	private String openId;
+	private String nickName;
+	private String headImgUrl;
+
 	public Integer getUid() {
 		return uid;
 	}
@@ -80,5 +86,28 @@ public class User extends PaginationEntity implements Serializable{
 	}
 	public void setTextStr(String textStr) {
 		this.textStr = textStr;
+	}
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getHeadImgUrl() {
+		return headImgUrl;
+	}
+
+	public void setHeadImgUrl(String headImgUrl) {
+		this.headImgUrl = headImgUrl;
 	}
 }
