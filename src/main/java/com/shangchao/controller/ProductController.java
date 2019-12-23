@@ -38,7 +38,7 @@ public class ProductController {
     @GetMapping("/id")
     public JSONObject getById(String productId){
         JSONObject jo = new JSONObject();
-        Optional<Product> product = productService.getById(productId);
+        Product product = productService.getById(productId);
         jo.put("product", product);
         return jo;
     }
@@ -48,7 +48,7 @@ public class ProductController {
      * @return
      */
     @GetMapping("/topicId")
-    public JSONObject getByTopic(Long topicId){
+    public JSONObject getByTopic(String topicId){
         JSONObject jo = new JSONObject();
         List<Product> product = productService.getByTopic(topicId);
         jo.put("product", product);

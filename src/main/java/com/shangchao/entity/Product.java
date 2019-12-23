@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class Product implements Serializable {
     @Id//在属性上添加@Filed注解，值为对应的字段名
 //    @Field("_id")
-    private Long id;
+    private String id;
 
     @Field("imgsrc")
     private String imgsrc;

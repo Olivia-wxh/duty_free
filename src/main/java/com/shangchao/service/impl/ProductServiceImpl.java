@@ -17,14 +17,14 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public Optional<Product> getById(String productId) {
-        Optional<Product> product = productRepository.findById(productId);
+    public Product getById(String productId) {
+        Product product = productRepository.findById(productId);
         return product;
     }
 
     @Override
-    public List<Product> getByTopic(Long topicId) {
-        List<Product> list = productRepository.getByTopic(topicId);
+    public List<Product> getByTopic(String topicId) {
+        List<Product> list = productRepository.findByTopicIdWithin(topicId);
         return list;
     }
 }

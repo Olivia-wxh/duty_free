@@ -1,6 +1,7 @@
 package com.shangchao.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mongodb.client.result.DeleteResult;
 import com.shangchao.entity.Product;
 import com.shangchao.entity.Topic;
 import com.shangchao.repository.ProductRepository;
@@ -22,16 +23,20 @@ public class TopicServiceImpl implements TopicService {
     private ProductRepository productRepository;
 
     @Override
-    public void deleteTopicById(String topicId) {
-        topicRepository.deleteById(topicId);
+    public DeleteResult deleteTopicById(String topicId) {
+        DeleteResult re = topicRepository.deleteById(topicId);
+        return re;
     }
 
     @Override
     public Topic saveOrUpdateTopic(JSONObject json) {
         String topicName = json.getString("topicName").toString();
-        String topicId = json.getString("topicId").toString();
+        String topicId = json.getString("topicId");
+//        String topicId = json.getString("topicId").toString();
         Topic topic = new Topic();
-        topic.setId(Long.parseLong(topicId));
+        if (topicId != null) {
+            topic.setId(topicId);
+        }
         topic.setTopicName(topicName);
         Topic save = topicRepository.save(topic);
         return save;
@@ -47,17 +52,16 @@ public class TopicServiceImpl implements TopicService {
     public List<Topic> getTopicWithProduct() {
         List<Topic> all = topicRepository.findAll();
         for (int i = 0; i < all.size(); i++) {
-            List<Product> byTopic = productRepository.getByTopic(all.get(i).getId());
+            List<Product> byTopic = productRepository.findByTopicIdWithin(all.get(i).getId());
             all.get(i).setProducts(byTopic);
         }
         return all;
     }
 
     @Override
-    public Topic getTopicWithProduct(Long topicId) {
-        Optional<Topic> byId = topicRepository.findById(topicId.toString());
-        Topic topic = byId.get();
-        List<Product> byTopic = productRepository.getByTopic(topic.getId());
+    public Topic getTopicWithProduct(String topicId) {
+        Topic topic = topicRepository.findById(topicId.toString());
+        List<Product> byTopic = productRepository.findByTopicIdWithin(topic.getId());
         topic.setProducts(byTopic);
         return topic;
     }

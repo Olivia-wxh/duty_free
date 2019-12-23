@@ -11,7 +11,7 @@ import com.shangchao.service.IUserService;
 import com.shangchao.service.abs.AbstractService;
 import com.shangchao.sm.SM3Digest;
 import com.shangchao.utils.*;
-import com.sun.deploy.net.HttpResponse;
+//import com.sun.deploy.net.HttpResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
