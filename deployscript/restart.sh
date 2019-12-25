@@ -1,0 +1,1 @@
+mvn clean package && sh $(cd $(dirname $0) pwd)/service.sh "duty_free" restart

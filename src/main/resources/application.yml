@@ -59,7 +59,7 @@ redis:
     refreshJwtTokenExpireTime: 30
 jwt:
     anonymous:
-        urls: userLogin,logout,captcha,weChatLogin,webchat,api,swagger
+        urls: userLogin,logout,captcha,weChatLogin,webchat,api,swagger,doc,webjars
 logging:
   config: classpath:log4j2-spring.xml
 webchat:
