@@ -1,32 +1,32 @@
-//package com.shangchao.service.impl;
+// package com.shangchao.service.impl;
 //
-//import com.alibaba.fastjson.JSON;
-//import com.alibaba.fastjson.JSONObject;
-//import com.mongodb.client.ListIndexesIterable;
-//import com.mongodb.client.model.IndexOptions;
-//import com.mongodb.client.model.Indexes;
-//import com.shangchao.entity.Product;
-//import com.shangchao.service.SimpleMongoService;
-//import org.bson.Document;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.mongodb.core.MongoTemplate;
-//import org.springframework.data.mongodb.core.query.Criteria;
-//import org.springframework.data.mongodb.core.query.Query;
-//import org.springframework.data.mongodb.core.query.Update;
-//import org.springframework.stereotype.Service;
-//import org.springframework.util.ObjectUtils;
+// import com.alibaba.fastjson.JSON;
+// import com.alibaba.fastjson.JSONObject;
+// import com.mongodb.client.ListIndexesIterable;
+// import com.mongodb.client.model.IndexOptions;
+// import com.mongodb.client.model.Indexes;
+// import com.shangchao.entity.Product;
+// import com.shangchao.service.SimpleMongoService;
+// import org.bson.Document;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.data.mongodb.core.MongoTemplate;
+// import org.springframework.data.mongodb.core.query.Criteria;
+// import org.springframework.data.mongodb.core.query.Query;
+// import org.springframework.data.mongodb.core.query.Update;
+// import org.springframework.stereotype.Service;
+// import org.springframework.util.ObjectUtils;
 //
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Map;
+// import java.util.ArrayList;
+// import java.util.List;
+// import java.util.Map;
 //
-///**
+/// **
 // * @author wangcanfeng
 // * @description 简单的mongodb使用接口
 // * @Date Created in 17:24-2019/3/20
 // */
-//@Service
-//public class SimpleMongoServiceImpl<T extends Product> implements SimpleMongoService<T> {
+// @Service
+// public class SimpleMongoServiceImpl<T extends Product> implements SimpleMongoService<T> {
 //
 //    /**
 //     * 注入template，减少重复代码
@@ -69,7 +69,8 @@
 //        // 设置为唯一
 //        options.unique(true);
 //        //创建按filedName升序排的索引
-//        return mongoTemplate.getCollection(collectionName).createIndex(Indexes.ascending(filedName), options);
+//        return
+// mongoTemplate.getCollection(collectionName).createIndex(Indexes.ascending(filedName), options);
 //    }
 //
 //
@@ -84,7 +85,8 @@
 //     */
 //    @Override
 //    public List<String> getAllIndexes(String collectionName) {
-//        ListIndexesIterable<Document> list = mongoTemplate.getCollection(collectionName).listIndexes();
+//        ListIndexesIterable<Document> list =
+// mongoTemplate.getCollection(collectionName).listIndexes();
 //        //上面的list不能直接获取size，因此初始化arrayList就不设置初始化大小了
 //        List<String> indexes = new ArrayList<>();
 //        for (Document document : list) {
@@ -220,7 +222,8 @@
 //     * @Date: 2019/3/21 10:38
 //     */
 //    @Override
-//    public List<T> selectList(String collectName, Class<T> clazz, Integer currentPage, Integer pageSize) {
+//    public List<T> selectList(String collectName, Class<T> clazz, Integer currentPage, Integer
+// pageSize) {
 //        //设置分页参数
 //        Query query = new Query();
 //        //设置分页信息
@@ -246,7 +249,8 @@
 //     * @Date: 2019/3/21 10:48
 //     */
 //    @Override
-//    public List<T> selectByCondition(String collectName, Map<String, String> conditions, Class<T> clazz, Integer currentPage, Integer pageSize) {
+//    public List<T> selectByCondition(String collectName, Map<String, String> conditions, Class<T>
+// clazz, Integer currentPage, Integer pageSize) {
 //        if (ObjectUtils.isEmpty(conditions)) {
 //            return selectList(collectName, clazz, currentPage, pageSize);
 //        } else {
@@ -259,4 +263,4 @@
 //            return mongoTemplate.find(query, clazz, collectName);
 //        }
 //    }
-//}
+// }

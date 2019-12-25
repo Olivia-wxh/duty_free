@@ -1,18 +1,18 @@
-//package com.shangchao.service;
+// package com.shangchao.service;
 //
-//import com.shangchao.entity.Product;
-//import org.springframework.stereotype.Service;
+// import com.shangchao.entity.Product;
+// import org.springframework.stereotype.Service;
 //
-//import java.util.List;
-//import java.util.Map;
+// import java.util.List;
+// import java.util.Map;
 //
-///**
+/// **
 // * @author wangcanfeng
 // * @description 简单的mongodb使用接口
 // * @Date Created in 17:24-2019/3/20
 // */
-//@Service
-//public interface SimpleMongoService<T extends Product> {
+// @Service
+// public interface SimpleMongoService<T extends Product> {
 //
 //    /**
 //     * 功能描述: 创建一个集合
@@ -139,7 +139,8 @@
 //     * @Author:wangcanfeng
 //     * @Date: 2019/3/21 10:38
 //     */
-//    public List<T> selectList(String collectName, Class<T> clazz, Integer currentPage, Integer pageSize);
+//    public List<T> selectList(String collectName, Class<T> clazz, Integer currentPage, Integer
+// pageSize);
 //
 //
 //    /**
@@ -155,5 +156,6 @@
 //     * @Author:wangcanfeng
 //     * @Date: 2019/3/21 10:48
 //     */
-//    public List<T> selectByCondition(String collectName, Map<String, String> conditions, Class<T> clazz, Integer currentPage, Integer pageSize);
-//}
+//    public List<T> selectByCondition(String collectName, Map<String, String> conditions, Class<T>
+// clazz, Integer currentPage, Integer pageSize);
+// }

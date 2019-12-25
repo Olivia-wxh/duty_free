@@ -11,21 +11,20 @@ import java.io.Serializable;
 import java.util.List;
 
 @Data
-@Document(collection = "special_topic")//对应mongodb表
-@ApiModel//swagger注解
+@Document(collection = "special_topic") // 对应mongodb表
+@ApiModel // swagger注解
 public class Topic implements Serializable {
 
-    @Id
-//    @Field("_id")
-    private String id;
+  @Id
+  //    @Field("_id")
+  private String id;
 
-    @Field("topicName")
-    private String topicName;
+  @Field("topicName")
+  private String topicName;
 
-    @Field("isDelete")
-    private Integer isDelete;//0表示未删除/上架，1表示删除/下架；
+  @Field("isDelete")
+  private Integer isDelete; // 0表示未删除/上架，1表示删除/下架；
 
-    //引用商品信息
-    @DBRef
-    private List<Product> products;
+  // 引用商品信息
+  @DBRef private List<Product> products;
 }

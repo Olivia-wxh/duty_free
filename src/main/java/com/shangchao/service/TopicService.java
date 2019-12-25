@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface TopicService {
 
-    DeleteResult deleteTopicById(String topicId);
+  DeleteResult deleteTopicById(String topicId);
 
-    Topic saveOrUpdateTopic(JSONObject json);
+  Topic saveOrUpdateTopic(JSONObject json);
 
-    List<Topic> getAllTopic();
+  List<Topic> getAllTopic();
 
-    List<Topic> getTopicWithProduct();
+  List<Topic> getTopicWithProduct();
 
-    Topic getTopicWithProduct(String topicId);
+  Topic getTopicWithProduct(String topicId);
 }

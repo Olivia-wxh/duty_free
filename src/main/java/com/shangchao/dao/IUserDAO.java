@@ -1,36 +1,31 @@
 package com.shangchao.dao;
 
-
-
 import com.shangchao.entity.User;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
-/**
- */
+/** */
 @Repository
 public interface IUserDAO {
-    public User findByName(String userName);
-    public User findByOpenId(String openId);
+  public User findByName(String userName);
 
-    public List<User> getAllUser(Map<String, Object> param);
+  public User findByOpenId(String openId);
 
-    public Integer getUserTotal(Map<String, Object> param);
+  public List<User> getAllUser(Map<String, Object> param);
 
-    public User listRolesAndPermissions(String userName);
+  public Integer getUserTotal(Map<String, Object> param);
 
-    public boolean doCreate(User vo);
+  public User listRolesAndPermissions(String userName);
 
-    public boolean doUpdate(User vo);
+  public boolean doCreate(User vo);
 
-    public boolean doRemove(Object[] ids);
+  public boolean doUpdate(User vo);
 
-    public List<User> listUserByNams(Object[] names);
+  public boolean doRemove(Object[] ids);
 
-    public void saveUser(User user);
+  public List<User> listUserByNams(Object[] names);
 
-
+  public void saveUser(User user);
 }

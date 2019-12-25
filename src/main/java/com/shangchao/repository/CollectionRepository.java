@@ -8,15 +8,15 @@ import java.util.List;
 
 public interface CollectionRepository {
 
-    CollectTopic saveCollectionTopic(CollectTopic ct);
+  CollectTopic saveCollectionTopic(CollectTopic ct);
 
-    CollectProduct saveCollectionProduct(CollectProduct cp);
+  CollectProduct saveCollectionProduct(CollectProduct cp);
 
-    DeleteResult delCollectionTopic(String topicId);
+  DeleteResult delCollectionTopic(String topicId);
 
-    DeleteResult delCollectionProduct(String productId);
+  DeleteResult delCollectionProduct(String productId);
 
-    List<CollectTopic> getTopics(String userId);
+  List<CollectTopic> getTopics(String userId);
 
-    List<CollectProduct> getProducts(String userId);
+  List<CollectProduct> getProducts(String userId);
 }
