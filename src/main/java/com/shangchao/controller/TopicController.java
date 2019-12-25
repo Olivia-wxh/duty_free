@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -21,7 +22,7 @@ import java.util.Optional;
 @Api(tags = "专题管理相关接口", description = "如有疑问请联系王晓辉")
 public class TopicController {
 
-    @Resource
+    @Autowired
     private TopicService topicService;
 
     /**
