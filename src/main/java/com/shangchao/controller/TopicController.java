@@ -76,10 +76,10 @@ public class TopicController {
         List<Topic> topicList = topicService.getTopicWithProduct();
         //查询轮播图路径
         List<String> list = new ArrayList<>();
-        list.add("/root/shangchao/picture/a.jpg");
-        list.add("/root/shangchao/picture/b.jpg");
-        list.add("/root/shangchao/picture/c.jpg");
-        list.add("/root/shangchao/picture/d.jpg");
+        list.add("/images/a.jpg");
+        list.add("/images/b.jpg");
+        list.add("/images/c.jpg");
+        list.add("/images/d.jpg");
         in.put("topic", topicList);
         in.put("picture", list);
         jo.put("data", in);
