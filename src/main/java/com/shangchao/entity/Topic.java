@@ -1,5 +1,6 @@
 package com.shangchao.entity;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -10,7 +11,8 @@ import java.io.Serializable;
 import java.util.List;
 
 @Data
-@Document(collection = "special_topic")
+@Document(collection = "special_topic")//对应mongodb表
+@ApiModel//swagger注解
 public class Topic implements Serializable {
 
     @Id
