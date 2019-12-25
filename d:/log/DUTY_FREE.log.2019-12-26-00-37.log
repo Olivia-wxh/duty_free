@@ -67,3 +67,6 @@
 2019-12-26 00:37:51.671 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-9999"]
 2019-12-26 00:37:51.698 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 9999 (http) with context path ''
 2019-12-26 00:37:51.702 [main] INFO  com.shangchao.Start - Started Start in 6.108 seconds (JVM running for 6.608)
+2019-12-26 00:39:50.458 [http-nio-9999-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-12-26 00:39:50.460 [http-nio-9999-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2019-12-26 00:39:50.473 [http-nio-9999-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 13 ms
