@@ -5,6 +5,10 @@ import com.shangchao.entity.User;
 import com.shangchao.service.IUserService;
 import com.shangchao.sm.SM3Digest;
 import com.shangchao.utils.JwtUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +25,17 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/login")
+@Api(tags = "登录相关接口", description = "如有疑问请联系王宪良")
 public class LoginController {
 
   @Autowired private IUserService userService;
 
   @PostMapping(value = "/userLogin")
+  @ApiOperation("用户登录接口")
+  @ApiImplicitParams({
+          @ApiImplicitParam(name = "username", value = "用户名", required = true),
+          @ApiImplicitParam(name = "password", value = "密码", required = true)
+  })
   public Map ajaxLogin(@RequestBody Map<String, String> loginInfo, HttpServletResponse response) {
     String username = loginInfo.get("username");
     String password = loginInfo.get("password");
@@ -70,6 +80,10 @@ public class LoginController {
   }
 
   @PostMapping(value = "/weChatLogin")
+  @ApiOperation("微信登录接口")
+  @ApiImplicitParams({
+          @ApiImplicitParam(name = "code", value = "微信获取code", required = true)
+  })
   public Map weChatLogin(@RequestParam String code, HttpServletResponse response) {
     //        String username=loginInfo.get("username");
     //        String password=loginInfo.get("password");
