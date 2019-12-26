@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="houtaifuwu" />
         <module name="duty_free" />
+        <module name="houtaifuwu" />
       </profile>
     </annotationProcessing>
   </component>
