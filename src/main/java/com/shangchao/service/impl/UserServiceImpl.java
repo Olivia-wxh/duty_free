@@ -176,7 +176,7 @@ public class UserServiceImpl extends AbstractService implements IUserService {
         HashMap map = new HashMap();
         map.put("openid", openid);
         map.put("user", user);
-        return ApiUtil.success("登录成功！", map);
+        return ResponseUtil.success("登录成功！", map);
         //                else {
 
         // 已经绑定用户信息直接登录
@@ -198,11 +198,11 @@ public class UserServiceImpl extends AbstractService implements IUserService {
         //                }
       } else {
         log.error("微信远程调用token失败：{}{}", jsonObject.get("errcode"), jsonObject.get("errmsg"));
-        return ApiUtil.fail("登录失败");
+        return ResponseUtil.fail("登录失败");
       }
     } catch (Exception e) {
       log.error("微信登录失败：{}", e.getMessage());
-      return ApiUtil.fail("登录失败");
+      return ResponseUtil.fail("登录失败");
     }
   }
 }

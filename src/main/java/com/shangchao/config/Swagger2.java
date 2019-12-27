@@ -10,6 +10,9 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * @author 王晓辉
+ */
 @Configuration
 @EnableSwagger2
 public class Swagger2 {
@@ -24,6 +27,6 @@ public class Swagger2 {
   }
 
   private ApiInfo apiInfo() {
-    return new ApiInfoBuilder().title("fsl").description("doc").version("1.0").build();
+    return new ApiInfoBuilder().title("逛免税店app在线接口文档").description("doc").version("1.0").build();
   }
 }

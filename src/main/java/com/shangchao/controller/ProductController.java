@@ -3,6 +3,7 @@ package com.shangchao.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.shangchao.entity.Product;
 import com.shangchao.service.ProductService;
+import com.shangchao.utils.ResponseUtil;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,10 +38,8 @@ public class ProductController {
    */
   @GetMapping("/id")
   public JSONObject getById(String productId) {
-    JSONObject jo = new JSONObject();
     Product product = productService.getById(productId);
-    jo.put("product", product);
-    return jo;
+    return ResponseUtil.success(product);
   }
 
   /**
@@ -50,9 +49,7 @@ public class ProductController {
    */
   @GetMapping("/topicId")
   public JSONObject getByTopic(String topicId) {
-    JSONObject jo = new JSONObject();
     List<Product> product = productService.getByTopic(topicId);
-    jo.put("product", product);
-    return jo;
+    return ResponseUtil.success(product);
   }
 }

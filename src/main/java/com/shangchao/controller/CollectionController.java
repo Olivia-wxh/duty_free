@@ -6,6 +6,7 @@ import com.shangchao.entity.CollectProduct;
 import com.shangchao.entity.CollectTopic;
 import com.shangchao.service.CollectionService;
 import com.shangchao.service.TopicService;
+import com.shangchao.utils.ResponseUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -35,12 +36,10 @@ public class CollectionController {
             @ApiImplicitParam(name = "topicId", value = "专题id", required = true)
     })
     public JSONObject saveCollectionTopic(@RequestBody JSONObject params){
-        JSONObject jo = new JSONObject();
         String userId = params.getString("userId").toString();
         String topicId = params.getString("topicId").toString();
         CollectTopic collectTopic = collectionService.saveCollectionTopic(userId, topicId);
-        jo.put("data", collectTopic);
-        return jo;
+        return ResponseUtil.success(collectTopic);
     }
 
     /**
@@ -50,10 +49,8 @@ public class CollectionController {
     @ApiOperation(value = "收藏专题列表查询的接口")
     @ApiImplicitParam(name = "userId", value = "用户id", required = true)
     public JSONObject getTopics(String userId){
-        JSONObject jo = new JSONObject();
         JSONObject collectTopic = collectionService.getTopics(userId);
-        jo.put("data", collectTopic);
-        return jo;
+        return ResponseUtil.success(collectTopic);
     }
 
     /**
@@ -63,10 +60,8 @@ public class CollectionController {
     @ApiOperation(value = "删除收藏的专题的接口")
     @ApiImplicitParam(name = "topicId", value = "专题id", required = true)
     public JSONObject delCollectionTopic(String topicId){
-        JSONObject jo = new JSONObject();
         DeleteResult deleteResult = collectionService.delCollectionTopic(topicId);
-        jo.put("data", deleteResult);
-        return jo;
+        return ResponseUtil.success(deleteResult);
     }
 
     /**
@@ -79,12 +74,10 @@ public class CollectionController {
             @ApiImplicitParam(name = "productId", value = "商品id", required = true)
     })
     public JSONObject saveCollectionProduct(@RequestBody JSONObject params){
-        JSONObject jo = new JSONObject();
         String userId = params.getString("userId").toString();
         String productId = params.getString("productId").toString();
         CollectProduct collectProduct = collectionService.saveCollectionProduct(userId, productId);
-        jo.put("data", collectProduct);
-        return jo;
+        return ResponseUtil.success(collectProduct);
     }
 
     /**
@@ -94,10 +87,8 @@ public class CollectionController {
     @ApiOperation(value = "收藏商品列表查询的接口")
     @ApiImplicitParam(name = "userId", value = "用户id", required = true)
     public JSONObject getProducts(String userId){
-        JSONObject jo = new JSONObject();
         JSONObject collectProduct = collectionService.getProduct(userId);
-        jo.put("data", collectProduct);
-        return jo;
+        return ResponseUtil.success(collectProduct);
     }
 
     /**
@@ -107,9 +98,7 @@ public class CollectionController {
     @ApiOperation(value = "删除收藏的商品的接口")
     @ApiImplicitParam(name = "productId", value = "商品id", required = true)
     public JSONObject delCollectionProduct(String productId){
-        JSONObject jo = new JSONObject();
         DeleteResult deleteResult = collectionService.delCollectionProduct(productId);
-        jo.put("data", deleteResult);
-        return jo;
+        return ResponseUtil.success(deleteResult);
     }
 }
