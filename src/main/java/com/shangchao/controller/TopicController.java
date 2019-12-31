@@ -2,6 +2,7 @@ package com.shangchao.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import com.shangchao.entity.Topic;
 import com.shangchao.service.TopicService;
 import com.shangchao.utils.ResponseUtil;
@@ -73,7 +74,23 @@ public class TopicController {
   @ApiOperation("根据ID查询专题,同时查询当前专题下所有商品")
   @ApiImplicitParam(name = "topicId", value = "专题id", required = true)
   public JSONObject getTopicWithProduct(String topicId) {
-    Topic topicList = topicService.getTopicWithProduct(topicId);
-    return ResponseUtil.success(topicList);
+    JSONObject jo = topicService.getTopicWithProduct(topicId);
+    return ResponseUtil.success(jo);
+  }
+
+  /**
+   * 给产品指定专题
+   *
+   * @return
+   */
+  @PostMapping("/setTopic")
+  @ApiOperation("给产品指定专题的接口")
+  @ApiImplicitParams({
+          @ApiImplicitParam(name = "topicId", value = "专题ID", required = true),
+          @ApiImplicitParam(name = "productId", value = "产品ID", required = true)
+  })
+  public JSONObject setTopic(@RequestBody JSONObject json) {
+    UpdateResult topic = topicService.setTopic(json);
+    return ResponseUtil.success(topic);
   }
 }

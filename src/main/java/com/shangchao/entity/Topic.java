@@ -2,6 +2,7 @@ package com.shangchao.entity;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,7 +17,7 @@ import java.util.List;
 public class Topic implements Serializable {
 
   @Id
-  //    @Field("_id")
+      @Field("_id")
   private String id;
 
   @Field("topicName")
@@ -26,5 +27,8 @@ public class Topic implements Serializable {
   private Integer isDelete; // 0表示未删除/上架，1表示删除/下架；
 
   // 引用商品信息
-  @DBRef private List<Product> products;
+  @DBRef
+  private ObjectId[] productIds;
+
+  private List<Product> product;
 }

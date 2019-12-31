@@ -2,6 +2,7 @@ package com.shangchao.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import com.shangchao.entity.Topic;
 
 import java.util.List;
@@ -16,5 +17,7 @@ public interface TopicService {
 
   List<Topic> getTopicWithProduct();
 
-  Topic getTopicWithProduct(String topicId);
+  JSONObject getTopicWithProduct(String topicId);
+
+  UpdateResult setTopic(JSONObject json);
 }

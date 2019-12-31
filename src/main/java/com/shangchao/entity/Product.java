@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data // 使用@Data注解，实体类可以省略get set方法
 @Document(collection = "product") // 在实体添加@Document注解，collection= "对应的表名"
@@ -16,7 +17,7 @@ import java.io.Serializable;
 public class Product implements Serializable {
   @ApiModelProperty(value = "产品id")
   @Id // 在属性上添加@Filed注解，值为对应的字段名
-  //    @Field("_id")
+      @Field("_id")
   private String id;
 
   @ApiModelProperty(value = "图片src")
@@ -63,8 +64,8 @@ public class Product implements Serializable {
   @Field("num")
   private String num;
 
-  @ApiModelProperty(value = "所属专题")
-  // 引用专题信息
-  @DBRef
-  private Topic topic;
+//  @ApiModelProperty(value = "所属专题")
+//  // 引用专题信息
+//  @DBRef
+//  private List<Topic> topic;
 }

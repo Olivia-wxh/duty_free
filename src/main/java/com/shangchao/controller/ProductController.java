@@ -5,6 +5,8 @@ import com.shangchao.entity.Product;
 import com.shangchao.service.ProductService;
 import com.shangchao.utils.ResponseUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +39,8 @@ public class ProductController {
    * @return
    */
   @GetMapping("/id")
+  @ApiOperation("根据商品ID获取商品信息")
+  @ApiImplicitParam(name = "productId", value = "商品id", required = true)
   public JSONObject getById(String productId) {
     Product product = productService.getById(productId);
     return ResponseUtil.success(product);
@@ -48,8 +52,12 @@ public class ProductController {
    * @return
    */
   @GetMapping("/topicId")
+  @ApiOperation("根据专题ID获取商品集信息")
+  @ApiImplicitParam(name = "topicId", value = "专题id", required = true)
   public JSONObject getByTopic(String topicId) {
     List<Product> product = productService.getByTopic(topicId);
     return ResponseUtil.success(product);
   }
+
+
 }
