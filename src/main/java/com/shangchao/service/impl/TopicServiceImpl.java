@@ -54,9 +54,8 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public List<Topic> getTopicWithProduct() {
         List<Topic> all = topicRepository.findAll();
-        List<Product> temp = new ArrayList<>();
         for (int i = 0; i < all.size(); i++) {
-            temp.clear();
+            List<Product> temp = new ArrayList<>();
                 ObjectId[] oid = all.get(i).getProductIds();
                 if (oid != null) {
                     for (int j = 0; j < oid.length; j++) {
