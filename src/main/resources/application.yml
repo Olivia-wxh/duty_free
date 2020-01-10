@@ -13,6 +13,7 @@ spring:
 #数据库名称
       database: shangchao
 
+
   main:
     allow-bean-definition-overriding: true
   #redis

@@ -18,4 +18,6 @@ public interface TopicRepository {
   List<Topic> findAll();
 
   Topic findById(String toString);
+
+  List<Topic> getByPage(Integer currentPage, Integer pageSize);
 }

@@ -6,6 +6,8 @@ import com.shangchao.entity.Topic;
 import com.shangchao.repository.TopicRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -38,8 +40,8 @@ public class TopicRepositoryImpl implements TopicRepository {
     query.addCriteria(Criteria.where("_id").is(topicId));
     Update update = new Update();
     update.addToSet("productIds", productId);
-    UpdateResult special_topic = mongoTemplate.upsert(query, update, "special_topic");
-    return special_topic;
+    UpdateResult sc_topic = mongoTemplate.upsert(query, update, "sc_topic");
+    return sc_topic;
   }
 
   @Override
@@ -53,5 +55,14 @@ public class TopicRepositoryImpl implements TopicRepository {
     Query query = new Query(Criteria.where("_id").is(topicId));
     Topic topic = mongoTemplate.findOne(query, Topic.class);
     return topic;
+  }
+
+  @Override
+  public List<Topic> getByPage(Integer currentPage, Integer pageSize) {
+    Pageable pageable = PageRequest.of(currentPage,pageSize);
+    Query query = new Query();
+    query.with(pageable);
+    List<Topic> all = mongoTemplate.find(query, Topic.class);
+    return all;
   }
 }

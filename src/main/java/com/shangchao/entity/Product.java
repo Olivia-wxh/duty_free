@@ -1,5 +1,6 @@
 package com.shangchao.entity;
 
+import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -12,60 +13,97 @@ import java.io.Serializable;
 import java.util.List;
 
 @Data // 使用@Data注解，实体类可以省略get set方法
-@Document(collection = "product") // 在实体添加@Document注解，collection= "对应的表名"
+@Document(collection = "sc_product") // 在实体添加@Document注解，collection= "对应的表名"
 @ApiModel // swagger注解
 public class Product implements Serializable {
-  @ApiModelProperty(value = "产品id")
-  @Id // 在属性上添加@Filed注解，值为对应的字段名
-      @Field("_id")
-  private String id;
 
-  @ApiModelProperty(value = "图片src")
-  @Field("imgsrc")
-  private String imgsrc;
+    @ApiModelProperty(value = "产品id")
+    @Id // 在属性上添加@Filed注解，值为对应的字段名
+    @Field("_id")
+    private String id;
 
-  @ApiModelProperty(value = "主题")
-  @Field("title")
-  private String title;
+    @ApiModelProperty(value = "产品名称")
+    @Field("productName")
+    private String productName;
 
-  @ApiModelProperty(value = "价格")
-  @Field("price")
-  private String price;
+    @ApiModelProperty(value = "图片src")
+    @Field("images")
+    private List<String> images;
 
-  @ApiModelProperty(value = "抓取来的产品ID")
-  @Field("productId")
-  private String productId;
+    @ApiModelProperty(value = "品牌ID")
+    @Field("brandId")
+    private String brandId;
 
-  @ApiModelProperty(value = "产品信息")
-  @Field("productInfo")
-  private String productInfo;
+    @ApiModelProperty(value = "品牌名称")
+    @Field("brandName")
+    private String brandName;
 
-  @ApiModelProperty(value = "折扣")
-  @Field("priceOff")
-  private String priceOff;
+    @ApiModelProperty(value = "价格")
+    @Field("price")
+    private Double price;
 
-  @ApiModelProperty(value = "美元价格")
-  @Field("discountD")
-  private String discountD;
+    @ApiModelProperty(value = "售卖价格")
+    @Field("salePrice")
+    private Double salePrice;
 
-  @ApiModelProperty(value = "人民币价格")
-  @Field("discountR")
-  private String discountR;
+    @ApiModelProperty(value = "折扣")
+    @Field("priceOff")
+    private Double priceOff;
 
-  @ApiModelProperty(value = "disShopNo1")
-  @Field("disShopNo1")
-  private String disShopNo1;
+    @ApiModelProperty(value = "产品聚合信息")
+    @Field("infos")
+    private String[][] infos;
 
-  @ApiModelProperty(value = "star")
-  @Field("star")
-  private String star;
+    @ApiModelProperty(value = "规格")
+    @Field("specification")
+    private String specification;
 
-  @ApiModelProperty(value = "num")
-  @Field("num")
-  private String num;
+    @Field("productInfo")
+    private String productInfo;
 
-//  @ApiModelProperty(value = "所属专题")
-//  // 引用专题信息
-//  @DBRef
-//  private List<Topic> topic;
+    @ApiModelProperty(value = "产品来源")
+    @Field("source")
+    private String source;
+
+    @ApiModelProperty(value = "数据源标识")
+    @Field("doid")
+    private String doid;
+
+    @ApiModelProperty(value = "star")
+    @Field("star")
+    private String star;
+
+    @ApiModelProperty(value = "num")
+    @Field("num")
+    private String num;
+
+    @ApiModelProperty(value = "catId1")
+    @Field("catId1")
+    private String catId1;
+
+    @ApiModelProperty(value = "catId2")
+    @Field("catId2")
+    private String catId2;
+
+    @ApiModelProperty(value = "catId3")
+    @Field("catId3")
+    private String catId3;
+
+    @ApiModelProperty(value = "catStr")
+    @Field("catStr")
+    private String[] catStr;
+
+//    @ApiModelProperty(value = "主题")
+//    @Field("title")
+//    private String title;
+
+    //以下属性是返回前端时计算后赋值，不入库
+
+
+    @ApiModelProperty(value = "折后美元价格")
+    private Double dollar;
+
+    @ApiModelProperty(value = "折后人民币价格")
+    private Double rmb;
+
 }

@@ -11,7 +11,7 @@ public interface TopicService {
 
   DeleteResult deleteTopicById(String topicId);
 
-  Topic saveOrUpdateTopic(JSONObject json);
+  Topic saveOrUpdateTopic(Topic topic);
 
   List<Topic> getAllTopic();
 
@@ -19,5 +19,9 @@ public interface TopicService {
 
   JSONObject getTopicWithProduct(String topicId);
 
-  UpdateResult setTopic(JSONObject json);
+  UpdateResult setTopic(String topicId, String productId);
+
+  List<Topic> getByPage(Integer currentPage, Integer pageSize);
+
+  void resetTopic();
 }
