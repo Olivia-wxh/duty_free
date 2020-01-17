@@ -38,26 +38,26 @@ public class ProductController {
    *
    * @return
    */
-  @GetMapping("/id")
-  @ApiOperation("根据商品ID获取商品信息")
-  @ApiImplicitParam(name = "productId", value = "商品id", required = true)
-  public JSONObject getById(String productId) {
-    Product product = productService.getById(productId);
-    return ResponseUtil.success(product);
-  }
+//  @GetMapping("/id")
+//  @ApiOperation("根据商品ID获取商品信息")
+//  @ApiImplicitParam(name = "productId", value = "商品id", required = true)
+//  public JSONObject getById(String productId) {
+//    Product product = productService.getById(productId);
+//    return ResponseUtil.success(product);
+//  }
 
   /**
    * 根据主题ID查询产品信息
    *
    * @return
    */
-  @GetMapping("/topicId")
-  @ApiOperation("根据专题ID获取商品集信息")
-  @ApiImplicitParam(name = "topicId", value = "专题id", required = true)
-  public JSONObject getByTopic(String topicId) {
-    List<Product> product = productService.getByTopic(topicId);
-    return ResponseUtil.success(product);
-  }
+//  @GetMapping("/topicId")
+//  @ApiOperation("根据专题ID获取商品集信息")
+//  @ApiImplicitParam(name = "topicId", value = "专题id", required = true)
+//  public JSONObject getByTopic(String topicId) {
+//    List<Product> product = productService.getByTopic(topicId);
+//    return ResponseUtil.success(product);
+//  }
 
 
 }

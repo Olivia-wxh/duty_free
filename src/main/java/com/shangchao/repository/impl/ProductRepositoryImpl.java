@@ -53,6 +53,7 @@ public class ProductRepositoryImpl implements ProductRepository {
   @Override
   public List<Product> findProductByBrand(ObjectId[] oid) {
     Query query = new Query();
+    query.addCriteria(Criteria.where("images").ne("").not().size(0));
     query.addCriteria(Criteria.where("_id").in(oid));
     List<Product> products = mongoTemplate.find(query, Product.class);
     return products;

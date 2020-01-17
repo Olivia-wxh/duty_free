@@ -75,14 +75,14 @@ public class TopicController {
     return ResponseUtil.success(in);
   }
 
-//  /** 专题查询2：根据ID查询专题,同时查询当前专题下所有商品 */
-//  @GetMapping("/topicPro/one")
-//  @ApiOperation("根据ID查询专题,同时查询当前专题下所有商品")
-//  @ApiImplicitParam(name = "topicId", value = "专题id", required = true)
-//  public JSONObject getTopicWithProduct(String topicId) {
-//    JSONObject jo = topicService.getTopicWithProduct(topicId);
-//    return ResponseUtil.success(jo);
-//  }
+  /** 专题查询2：根据ID查询专题,同时查询当前专题下所有商品 */
+  @GetMapping("/topicPro/one")
+  @ApiOperation("根据ID查询专题,同时查询当前专题下所有商品")
+  @ApiImplicitParam(name = "topicId", value = "专题id", required = true)
+  public JSONObject getTopicWithProduct(String topicId) {
+    JSONObject jo = topicService.getTopicWithProduct(topicId);
+    return ResponseUtil.success(jo);
+  }
 
   /**
    * 给产品指定专题

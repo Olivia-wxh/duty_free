@@ -42,6 +42,10 @@ public class Product implements Serializable {
     @Field("price")
     private Double price;
 
+    @ApiModelProperty(value = "人民币原始价格")
+//    @Field("price")
+    private Double priceRMB;
+
     @ApiModelProperty(value = "售卖价格")
     @Field("salePrice")
     private Double salePrice;

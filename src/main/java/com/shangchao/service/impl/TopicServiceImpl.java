@@ -88,11 +88,20 @@ public class TopicServiceImpl implements TopicService {
         List<Product> temp = new ArrayList<>();
         for (int i = 0; i < oid.length; i++) {
             Product byId = productRepository.findById(oid[i].toString());
-            Double priceOff = byId.getPriceOff();
-            Double price = byId.getPrice();
-            byId.setDollar(price * priceOff);
-            byId.setRmb(price * priceOff * cny);
-            temp.add(byId);
+            if (byId.getImages().size() != 0) {
+                Double priceOff = byId.getPriceOff();//折扣
+                Double price = byId.getPrice();//美元原价
+                if (priceOff == null && !"".equals(priceOff)) {
+                    byId.setPriceRMB(price * cny);//人民币原价
+                    byId.setDollar(price);
+                    byId.setRmb(price * cny);
+                } else {
+                    byId.setPriceRMB(price * cny);//人民币原价
+                    byId.setDollar(price * priceOff);
+                    byId.setRmb(price * priceOff * cny);
+                }
+                temp.add(byId);
+            }
         }
         topic.setProductIds(null);
         topic.setProduct(temp);
@@ -115,6 +124,7 @@ public class TopicServiceImpl implements TopicService {
         String cnyStr = rate.getCny();
         Double cny = 6.9;//Double.parseDouble(cnyStr);
         List<Topic> list = topicRepository.getByPage(currentPage, pageSize);
+        List<Topic> result = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             List<Product> temp = new ArrayList<>();
             ObjectId[] oid = list.get(i).getProductIds();
@@ -126,11 +136,13 @@ public class TopicServiceImpl implements TopicService {
                     Double priceOff = byId.getPriceOff();
                     Double price = byId.getPrice();
                     if (priceOff != null && !"".equals(priceOff)) {
+                        byId.setPriceRMB(price * cny);//人民币原价
                         byId.setDollar(price * priceOff);
                         byId.setRmb(price * priceOff * cny);
                     } else {
-                        byId.setDollar(byId.getSalePrice());
-                        byId.setRmb(byId.getSalePrice() * cny);
+                        byId.setPriceRMB(price * cny);//人民币原价
+                        byId.setDollar(price);
+                        byId.setRmb(price * cny);
                     }
                     //封装infos
                     String[][] infos = byId.getInfos();
@@ -149,8 +161,11 @@ public class TopicServiceImpl implements TopicService {
             }
             list.get(i).setProduct(temp);
             list.get(i).setProductIds(null);
+            if (temp.size() > 0) {
+                result.add(list.get(i));
+            }
         }
-        return list;
+        return result;
     }
 
     @Override
