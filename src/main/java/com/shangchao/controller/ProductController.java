@@ -38,13 +38,13 @@ public class ProductController {
    *
    * @return
    */
-//  @GetMapping("/id")
-//  @ApiOperation("根据商品ID获取商品信息")
-//  @ApiImplicitParam(name = "productId", value = "商品id", required = true)
-//  public JSONObject getById(String productId) {
-//    Product product = productService.getById(productId);
-//    return ResponseUtil.success(product);
-//  }
+  @GetMapping("/id")
+  @ApiOperation("根据商品ID获取商品信息")
+  @ApiImplicitParam(name = "productId", value = "商品id", required = true)
+  public JSONObject getById(String productId) {
+    Product product = productService.getById(productId);
+    return ResponseUtil.success(product);
+  }
 
   /**
    * 根据主题ID查询产品信息

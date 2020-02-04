@@ -6,6 +6,7 @@ import com.mongodb.client.result.UpdateResult;
 import com.shangchao.entity.ExchangeRate;
 import com.shangchao.entity.Product;
 import com.shangchao.entity.Topic;
+import com.shangchao.entity.TopicImage;
 import com.shangchao.repository.ProductRepository;
 import com.shangchao.repository.TopicRepository;
 import com.shangchao.service.TopicService;
@@ -23,6 +24,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class TopicServiceImpl implements TopicService {
@@ -92,15 +95,38 @@ public class TopicServiceImpl implements TopicService {
                 Double priceOff = byId.getPriceOff();//折扣
                 Double price = byId.getPrice();//美元原价
                 if (priceOff == null && !"".equals(priceOff)) {
-                    byId.setPriceRMB(price * cny);//人民币原价
+                    byId.setPriceRMB(Double.parseDouble(String.format("%.2f", price * cny)));//人民币原价
                     byId.setDollar(price);
-                    byId.setRmb(price * cny);
+                    byId.setRmb(Double.parseDouble(String.format("%.2f", price * cny)));
                 } else {
-                    byId.setPriceRMB(price * cny);//人民币原价
-                    byId.setDollar(price * priceOff);
-                    byId.setRmb(price * priceOff * cny);
+                    byId.setPriceRMB(Double.parseDouble(String.format("%.2f", price * cny)));//人民币原价
+                    byId.setDollar(Double.parseDouble(String.format("%.2f", price * priceOff)));
+                    byId.setRmb(Double.parseDouble(String.format("%.2f", price * priceOff * cny)));
                 }
-                temp.add(byId);
+                //封装infos
+                String[][] infos = byId.getInfos();
+                if (infos != null) {
+                    String in = "";
+                    for (int aa = 0; aa < infos.length; aa++) {
+                        in = in + infos[aa][0] + ":" + infos[aa][1] + "。";
+                    }
+                    Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+                    Matcher m = p.matcher(in);
+                    in = m.replaceAll("");
+                    byId.setProductInfo(in);
+                    byId.setInfos(null);
+                }
+                //图片信息为空的数据过滤掉
+                List<String> images = byId.getImages();
+                if (images.size() > 0) {
+                    if (images.size() == 1) {
+                        if (!"".equals(images.get(0).trim())) {
+                            temp.add(byId);
+                        }
+                    } else {
+                        temp.add(byId);
+                    }
+                }
             }
         }
         topic.setProductIds(null);
@@ -117,12 +143,7 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public List<Topic> getByPage(Integer currentPage, Integer pageSize) {
-        //查询汇率
-        Query query = new Query();
-        query.with(Sort.by(Sort.Order.desc("addtime")));
-        ExchangeRate rate = mongoTemplate.findOne(query, ExchangeRate.class, "sc_usd_rate");
-        String cnyStr = rate.getCny();
-        Double cny = 6.9;//Double.parseDouble(cnyStr);
+        Double cny = productRepository.getRate();
         List<Topic> list = topicRepository.getByPage(currentPage, pageSize);
         List<Topic> result = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
@@ -136,27 +157,38 @@ public class TopicServiceImpl implements TopicService {
                     Double priceOff = byId.getPriceOff();
                     Double price = byId.getPrice();
                     if (priceOff != null && !"".equals(priceOff)) {
-                        byId.setPriceRMB(price * cny);//人民币原价
-                        byId.setDollar(price * priceOff);
-                        byId.setRmb(price * priceOff * cny);
+                        byId.setPriceRMB(Double.parseDouble(String.format("%.2f", price * cny)));//人民币原价
+                        byId.setDollar(Double.parseDouble(String.format("%.2f", price * priceOff)));
+                        byId.setRmb(Double.parseDouble(String.format("%.2f", price * priceOff * cny)));
                     } else {
-                        byId.setPriceRMB(price * cny);//人民币原价
+                        byId.setPriceRMB(Double.parseDouble(String.format("%.2f", price * cny)));//人民币原价
                         byId.setDollar(price);
-                        byId.setRmb(price * cny);
+                        byId.setRmb(Double.parseDouble(String.format("%.2f", price * cny)));
                     }
                     //封装infos
                     String[][] infos = byId.getInfos();
                     if (infos != null) {
-//                        JSONObject jo = new JSONObject();
                         String in = "";
                         for (int aa = 0; aa < infos.length; aa++) {
-//                            jo.put(infos[aa][0], infos[aa][1]);
                             in = in + infos[aa][0] + ":" + infos[aa][1] + "。";
                         }
+                        Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+                        Matcher m = p.matcher(in);
+                        in = m.replaceAll("");
                         byId.setProductInfo(in);
                         byId.setInfos(null);
                     }
-                    temp.add(byId);
+                    //图片信息为空的数据过滤掉
+                    List<String> images = byId.getImages();
+                    if (images.size() > 0) {
+                        if (images.size() == 1) {
+                            if (!"".equals(images.get(0).trim())) {
+                                temp.add(byId);
+                            }
+                        } else {
+                            temp.add(byId);
+                        }
+                    }
                 }
             }
             list.get(i).setProduct(temp);
@@ -194,5 +226,11 @@ public class TopicServiceImpl implements TopicService {
                 setTopic(topic1.getId(), proAll.get(mm).getId());
             }
         }
+    }
+
+    @Override
+    public List<TopicImage> getImages() {
+        List<TopicImage> images = topicRepository.getImages();
+        return images;
     }
 }

@@ -3,6 +3,7 @@ package com.shangchao.repository.impl;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import com.shangchao.entity.Topic;
+import com.shangchao.entity.TopicImage;
 import com.shangchao.repository.TopicRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,11 @@ public class TopicRepositoryImpl implements TopicRepository {
     query.with(pageable);
     List<Topic> all = mongoTemplate.find(query, Topic.class);
     return all;
+  }
+
+  @Override
+  public List<TopicImage> getImages() {
+    List<TopicImage> sc_topic_image = mongoTemplate.findAll(TopicImage.class, "sc_topic_image");
+    return sc_topic_image;
   }
 }

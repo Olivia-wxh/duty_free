@@ -1,10 +1,12 @@
 package com.shangchao.repository.impl;
 
 import com.mongodb.client.DistinctIterable;
+import com.shangchao.entity.ExchangeRate;
 import com.shangchao.entity.Product;
 import com.shangchao.repository.ProductRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -57,5 +59,16 @@ public class ProductRepositoryImpl implements ProductRepository {
     query.addCriteria(Criteria.where("_id").in(oid));
     List<Product> products = mongoTemplate.find(query, Product.class);
     return products;
+  }
+
+  @Override
+  public Double getRate() {
+    //查询汇率
+    Query query = new Query();
+    query.with(Sort.by(Sort.Order.desc("addtime")));
+    ExchangeRate rate = mongoTemplate.findOne(query, ExchangeRate.class, "sc_usd_rate");
+    String cnyStr = rate.getCny();
+    Double cny = Double.parseDouble(cnyStr);
+    return cny;
   }
 }

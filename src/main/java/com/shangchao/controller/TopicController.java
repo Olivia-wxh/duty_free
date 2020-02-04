@@ -1,19 +1,16 @@
 package com.shangchao.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mongodb.client.result.DeleteResult;
-import com.mongodb.client.result.UpdateResult;
 import com.shangchao.entity.Topic;
+import com.shangchao.entity.TopicImage;
 import com.shangchao.service.TopicService;
 import com.shangchao.utils.ResponseUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -70,8 +67,12 @@ public class TopicController {
     Integer pageSize = 10;
     JSONObject in = new JSONObject();
 //    List<Topic> topicList = topicService.getTopicWithProduct();
+    //查找专题
     List<Topic> topicList = topicService.getByPage(currentPage, pageSize);
     in.put("topic", topicList);
+    //查找专题轮播图
+    List<TopicImage> imageList = topicService.getImages();
+    in.put("images", imageList);
     return ResponseUtil.success(in);
   }
 

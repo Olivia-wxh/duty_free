@@ -18,4 +18,6 @@ public interface ProductRepository {
   List<Product> findByBrandName(String s);
 
   List<Product> findProductByBrand(ObjectId[] oid);
+
+  Double getRate();
 }
