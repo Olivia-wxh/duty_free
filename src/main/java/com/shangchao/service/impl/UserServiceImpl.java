@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 /** */
 @Service("userService")
 public class UserServiceImpl extends AbstractService implements IUserService {
+  private HashMap hashMap=new HashMap();
 
   private static Logger log = LogManager.getLogger(UserServiceImpl.class);
   //
@@ -140,20 +141,32 @@ public class UserServiceImpl extends AbstractService implements IUserService {
               + "&code="
               + code
               + "&grant_type=authorization_code";
-      JSONObject jsonObject = AuthUtil.doGetJson(url);
-      String openid = jsonObject.getString("openid");
-      String token = jsonObject.getString("access_token");
-      String infoUrl =
-          "https://api.weixin.qq.com/sns/userinfo?access_token="
-              + token
-              + "&openid="
-              + openid
-              + "&lang=zh_CN";
-      JSONObject userInfo = AuthUtil.doGetJson(infoUrl);
+      JSONObject userInfo=null;
+      JSONObject jsonObject =null;
+      Object value = hashMap.get(code);
+      if (value != null) {
+         userInfo=(JSONObject)value;
+      }else{
+        jsonObject = AuthUtil.doGetJson(url);
+        String openid = jsonObject.getString("openid");
+        String token = jsonObject.getString("access_token");
+        String infoUrl =
+                "https://api.weixin.qq.com/sns/userinfo?access_token="
+                        + token
+                        + "&openid="
+                        + openid
+                        + "&lang=zh_CN";
+         userInfo = AuthUtil.doGetJson(infoUrl);
+         userInfo.put("openid",openid);
+        hashMap.put(code,userInfo);
+      }
+
+
       // 成功获取授权,以下部分为业务逻辑处理了，根据个人业务需求写就可以了
-      if (userInfo != null && openid != null) {
+      if (userInfo != null) {
         String nickname = userInfo.getString("nickname");
         String headimgurl = userInfo.getString("headimgurl");
+        String openid = userInfo.getString("openid");
         headimgurl = headimgurl.replace("\\", "");
         // 根据openid查询时候有用户信息
         User user = userDAO.findByOpenId(openid);

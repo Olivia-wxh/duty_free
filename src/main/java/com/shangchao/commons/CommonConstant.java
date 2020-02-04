@@ -7,6 +7,8 @@ public class CommonConstant {
   /** JWT token前缀 */
   public static final String JWT_TOKEN = "token_jwt_";
 
+  public static final String WEBCHAT_URL = "webchat_url_";
+
   /** 汇 率 */
   public static double EXCHANGE_RATE = 0;
 }
