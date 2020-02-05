@@ -233,4 +233,10 @@ public class TopicServiceImpl implements TopicService {
         List<TopicImage> images = topicRepository.getImages();
         return images;
     }
+
+    @Override
+    public Topic getTopicById(String topicId) {
+        Topic topic = topicRepository.findById(topicId);
+        return topic;
+    }
 }

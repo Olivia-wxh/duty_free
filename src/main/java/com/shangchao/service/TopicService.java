@@ -27,4 +27,6 @@ public interface TopicService {
   void resetTopic();
 
   List<TopicImage> getImages();
+
+  Topic getTopicById(String topicId);
 }

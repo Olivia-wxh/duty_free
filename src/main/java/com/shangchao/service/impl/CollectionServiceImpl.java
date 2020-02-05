@@ -65,8 +65,11 @@ public class CollectionServiceImpl implements CollectionService {
         List<CollectTopic> collectTopics = collectionRepository.getTopics(userId);
         List<Topic> topicList = new ArrayList<>();
         for (int i = 0; i < collectTopics.size(); i++) {
-//            Topic topic = topicService.getTopicWithProduct(collectTopics.get(i).getTopicId());
-//            topicList.add(topic);
+            Topic topic = topicService.getTopicById(collectTopics.get(i).getTopicId());
+            if (topic != null) {
+                topic.setProductIds(null);
+                topicList.add(topic);
+            }
         }
         jo.put("collectTopic", topicList);
         return jo;

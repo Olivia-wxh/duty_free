@@ -63,7 +63,7 @@ public class TopicController {
           "第一页即currentPage=0时需要展示轮播图；" +
           "每个专题的imgUrl字段存储一张代表当前专题的图片，用于轮播图展示；")
   @ApiImplicitParam(name = "currentPage", value = "当前页数")
-  public JSONObject getTopicWithProduct(Integer currentPage) {
+  public JSONObject getTopicWithProduct(@RequestParam Integer currentPage) {
     Integer pageSize = 10;
     JSONObject in = new JSONObject();
 //    List<Topic> topicList = topicService.getTopicWithProduct();

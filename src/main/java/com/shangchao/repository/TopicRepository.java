@@ -22,5 +22,5 @@ public interface TopicRepository {
 
   List<Topic> getByPage(Integer currentPage, Integer pageSize);
 
-    List<TopicImage> getImages();
+  List<TopicImage> getImages();
 }
