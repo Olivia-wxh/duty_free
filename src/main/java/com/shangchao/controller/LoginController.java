@@ -1,5 +1,6 @@
 package com.shangchao.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.shangchao.commons.CodeAndMsgEnum;
 import com.shangchao.entity.User;
 import com.shangchao.service.IUserService;
@@ -36,9 +37,11 @@ public class LoginController {
           @ApiImplicitParam(name = "username", value = "用户名", required = true),
           @ApiImplicitParam(name = "password", value = "密码", required = true)
   })
-  public Map ajaxLogin(@RequestBody Map<String, String> loginInfo, HttpServletResponse response) {
-    String username = loginInfo.get("username");
-    String password = loginInfo.get("password");
+  public Map ajaxLogin(@RequestBody JSONObject params, HttpServletResponse response) {
+    String username = params.getString("username").toString();
+    String password = params.getString("password").toString();
+//    String username = loginInfo.get("username");
+//    String password = loginInfo.get("password");
     Map result = new HashMap<>(4);
     User vo = this.userService.getUserByUserName(username);
     System.out.println("=====:" + SM3Digest.summary(password));
@@ -56,9 +59,9 @@ public class LoginController {
   }
 
   @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
-  public Map saveUser(@RequestBody Map<String, String> usrInfo, HttpServletResponse response) {
-    String username = usrInfo.get("username");
-    String password = usrInfo.get("password");
+  public Map saveUser(@RequestBody JSONObject params, HttpServletResponse response) {
+    String username = params.getString("username").toString();
+    String password = params.getString("password").toString();
     User user = new User();
     user.setUserName(username);
     if (!StringUtils.isEmpty(password)) {
@@ -84,10 +87,11 @@ public class LoginController {
   @ApiImplicitParams({
           @ApiImplicitParam(name = "code", value = "微信获取code", required = true)
   })
-  public Map weChatLogin(@RequestParam String code, HttpServletResponse response) {
+  public Map weChatLogin(@RequestBody JSONObject params, HttpServletResponse response) {
     //        String username=loginInfo.get("username");
     //        String password=loginInfo.get("password");
     //        User vo = this.userService.getUserByUserName(username);
+    String code = params.getString("code").toString();
     Map result = this.userService.weChatLogin(code, response);
 
     //        System.out.println("=====:"+SM3Digest.summary(password));
