@@ -31,14 +31,14 @@ public class CollectionRepositoryImpl implements CollectionRepository {
 
   @Override
   public DeleteResult delCollectionTopic(String topicId) {
-    Query query = new Query(Criteria.where("_id").is(topicId));
+    Query query = new Query(Criteria.where("topicId").is(topicId));
     DeleteResult remove = mongoTemplate.remove(query, CollectTopic.class);
     return remove;
   }
 
   @Override
   public DeleteResult delCollectionProduct(String productId) {
-    Query query = new Query(Criteria.where("_id").is(productId));
+    Query query = new Query(Criteria.where("productId").is(productId));
     DeleteResult remove = mongoTemplate.remove(query, CollectProduct.class);
     return remove;
   }
