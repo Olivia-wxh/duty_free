@@ -56,4 +56,20 @@ public class CollectionRepositoryImpl implements CollectionRepository {
     List<CollectProduct> products = mongoTemplate.find(query, CollectProduct.class);
     return products;
   }
+
+  @Override
+  public CollectTopic getByUserIdTopicId(String userId, String topicId) {
+    Query query = new Query(Criteria.where("userId").is(userId));
+    query.addCriteria(Criteria.where("topicId").is(topicId));
+    CollectTopic topics = mongoTemplate.findOne(query, CollectTopic.class);
+    return topics;
+  }
+
+  @Override
+  public CollectProduct getByUserIdProductId(String userId, String productId) {
+    Query query = new Query(Criteria.where("userId").is(userId));
+    query.addCriteria(Criteria.where("productId").is(productId));
+    CollectProduct pro = mongoTemplate.findOne(query, CollectProduct.class);
+    return pro;
+  }
 }

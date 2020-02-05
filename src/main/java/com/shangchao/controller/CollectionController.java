@@ -39,7 +39,13 @@ public class CollectionController {
         String userId = params.getString("userId").toString();
         String topicId = params.getString("topicId").toString();
         CollectTopic collectTopic = collectionService.saveCollectionTopic(userId, topicId);
-        return ResponseUtil.success(collectTopic);
+        if (collectTopic == null) {
+            //收藏失败
+            return ResponseUtil.fail("专题不能重复收藏");
+        } else {
+            //收藏成功
+            return ResponseUtil.success(collectTopic);
+        }
     }
 
     /**
@@ -77,7 +83,13 @@ public class CollectionController {
         String userId = params.getString("userId").toString();
         String productId = params.getString("productId").toString();
         CollectProduct collectProduct = collectionService.saveCollectionProduct(userId, productId);
-        return ResponseUtil.success(collectProduct);
+        if (collectProduct == null) {
+            //收藏失败
+            return ResponseUtil.fail("商品不能重复收藏");
+        } else {
+            //收藏成功
+            return ResponseUtil.success(collectProduct);
+        }
     }
 
     /**
