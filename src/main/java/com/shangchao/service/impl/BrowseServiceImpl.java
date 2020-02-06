@@ -55,8 +55,8 @@ public class BrowseServiceImpl implements BrowseService {
     }
 
     @Override
-    public DeleteResult delBrowseProduct(String productId) {
-        DeleteResult deleteResult = browseRepository.removeProduct(productId);
+    public DeleteResult delBrowseProduct(String userId, String productId) {
+        DeleteResult deleteResult = browseRepository.removeProduct(userId, productId);
         return deleteResult;
     }
 }

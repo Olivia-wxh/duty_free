@@ -32,8 +32,9 @@ public class BrowseRepositoryImpl implements BrowseRepository {
     }
 
     @Override
-    public DeleteResult removeProduct(String productId) {
+    public DeleteResult removeProduct(String userId, String productId) {
         Query query = new Query(Criteria.where("productId").is(productId));
+        query.addCriteria(Criteria.where("userId").is(userId));
         DeleteResult remove = mongoTemplate.remove(query, BrowseProduct.class);
         return remove;
     }

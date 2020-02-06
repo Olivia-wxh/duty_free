@@ -10,5 +10,5 @@ public interface BrowseRepository {
 
     List<BrowseProduct> getProducts(String userId);
 
-    DeleteResult removeProduct(String productId);
+    DeleteResult removeProduct(String userId, String productId);
 }

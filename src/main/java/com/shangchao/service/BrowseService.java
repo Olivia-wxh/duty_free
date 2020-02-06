@@ -11,6 +11,6 @@ public interface BrowseService {
 
     JSONObject getProducts(String userId);
 
-    DeleteResult delBrowseProduct(String productId);
+    DeleteResult delBrowseProduct(String userId, String productId);
 
 }

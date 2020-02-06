@@ -66,14 +66,14 @@ public class CollectionServiceImpl implements CollectionService {
     }
 
     @Override
-    public DeleteResult delCollectionTopic(String topicId) {
-        DeleteResult re = collectionRepository.delCollectionTopic(topicId);
+    public DeleteResult delCollectionTopic(String userId, String topicId) {
+        DeleteResult re = collectionRepository.delCollectionTopic(userId, topicId);
         return re;
     }
 
     @Override
-    public DeleteResult delCollectionProduct(String productId) {
-        DeleteResult re = collectionRepository.delCollectionProduct(productId);
+    public DeleteResult delCollectionProduct(String userId, List<String> productIds) {
+        DeleteResult re = collectionRepository.delCollectionProduct(userId, productIds);
         return re;
     }
 

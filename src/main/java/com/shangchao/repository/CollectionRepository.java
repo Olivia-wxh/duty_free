@@ -12,9 +12,9 @@ public interface CollectionRepository {
 
     CollectProduct saveCollectionProduct(CollectProduct cp);
 
-    DeleteResult delCollectionTopic(String topicId);
+    DeleteResult delCollectionTopic(String userId, String topicId);
 
-    DeleteResult delCollectionProduct(String productId);
+    DeleteResult delCollectionProduct(String userId, List<String> productIds);
 
     List<CollectTopic> getTopics(String userId);
 

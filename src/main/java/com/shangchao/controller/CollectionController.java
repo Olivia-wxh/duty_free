@@ -1,5 +1,6 @@
 package com.shangchao.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mongodb.client.result.DeleteResult;
 import com.shangchao.entity.CollectProduct;
@@ -63,10 +64,13 @@ public class CollectionController {
      * 删除收藏的专题
      */
     @GetMapping("/delCollectTopic")
-    @ApiOperation(value = "删除收藏的专题的接口")
-    @ApiImplicitParam(name = "topicId", value = "专题id", required = true)
-    public JSONObject delCollectionTopic(String topicId){
-        DeleteResult deleteResult = collectionService.delCollectionTopic(topicId);
+    @ApiOperation(value = "取消收藏的专题的接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户id", required = true),
+            @ApiImplicitParam(name = "topicId", value = "专题id", required = true)
+    })
+    public JSONObject delCollectionTopic(String userId, String topicId){
+        DeleteResult deleteResult = collectionService.delCollectionTopic(userId, topicId);
         return ResponseUtil.success(deleteResult);
     }
 
@@ -106,11 +110,18 @@ public class CollectionController {
     /**
      * 删除收藏的商品
      */
-    @GetMapping("/delCollectProduct")
-    @ApiOperation(value = "删除收藏的商品的接口")
-    @ApiImplicitParam(name = "productId", value = "商品id", required = true)
-    public JSONObject delCollectionProduct(String productId){
-        DeleteResult deleteResult = collectionService.delCollectionProduct(productId);
+    @PostMapping("/delCollectProduct")
+    @ApiOperation(value = "取消收藏的商品的接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户id", required = true),
+            @ApiImplicitParam(name = "productIds", value = "商品id", allowMultiple=true, required = true)
+    })
+    public JSONObject delCollectionProduct(@RequestBody JSONObject params){//String userId, String productId
+        String userId = params.getString("userId").toString();
+        JSONArray jsonArray = params.getJSONArray("productIds");
+        String jsonStr = JSONObject.toJSONString(jsonArray);
+        List<String> productIds = JSONObject.parseArray(jsonStr,  String.class);
+        DeleteResult deleteResult = collectionService.delCollectionProduct(userId, productIds);
         return ResponseUtil.success(deleteResult);
     }
 }

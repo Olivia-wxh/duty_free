@@ -53,10 +53,13 @@ public class BrowseController {
      * 删除收藏的专题
      */
     @GetMapping("/delete")
-    @ApiOperation(value = "根据productId删除浏览的商品")
-    @ApiImplicitParam(name = "productId", value = "商品id", required = true)
-    public JSONObject delBrowseProduct(String productId){
-        DeleteResult deleteResult = browseService.delBrowseProduct(productId);
+    @ApiOperation(value = "删除浏览的商品")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户id", required = true),
+            @ApiImplicitParam(name = "productId", value = "商品id", required = true)
+    })
+    public JSONObject delBrowseProduct(String userId, String productId){
+        DeleteResult deleteResult = browseService.delBrowseProduct(userId, productId);
         return ResponseUtil.success(deleteResult);
     }
 }

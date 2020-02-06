@@ -13,9 +13,9 @@ public interface CollectionService {
 
     CollectProduct saveCollectionProduct(String userId, String productId);
 
-    DeleteResult delCollectionTopic(String topicId);
+    DeleteResult delCollectionTopic(String userId, String topicId);
 
-    DeleteResult delCollectionProduct(String productId);
+    DeleteResult delCollectionProduct(String userId, List<String> productIds);
 
     JSONObject getTopics(String userId);
 

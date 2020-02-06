@@ -30,17 +30,20 @@ public class CollectionRepositoryImpl implements CollectionRepository {
   }
 
   @Override
-  public DeleteResult delCollectionTopic(String topicId) {
+  public DeleteResult delCollectionTopic(String userId, String topicId) {
     Query query = new Query(Criteria.where("topicId").is(topicId));
+    query.addCriteria(Criteria.where("userId").is(userId));
     DeleteResult remove = mongoTemplate.remove(query, CollectTopic.class);
     return remove;
   }
 
   @Override
-  public DeleteResult delCollectionProduct(String productId) {
-    Query query = new Query(Criteria.where("productId").is(productId));
-    DeleteResult remove = mongoTemplate.remove(query, CollectProduct.class);
-    return remove;
+  public DeleteResult delCollectionProduct(String userId, List<String> productIds) {
+      Query query = new Query(Criteria.where("productId").in(productIds));
+      query.addCriteria(Criteria.where("userId").is(userId));
+      List<CollectProduct> collectProducts = mongoTemplate.find(query, CollectProduct.class);
+      DeleteResult remove = mongoTemplate.remove(query, CollectProduct.class);
+      return remove;
   }
 
   @Override
