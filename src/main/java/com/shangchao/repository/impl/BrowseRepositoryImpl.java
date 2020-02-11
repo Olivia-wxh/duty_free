@@ -19,23 +19,28 @@ public class BrowseRepositoryImpl implements BrowseRepository {
     protected MongoTemplate mongoTemplate;
 
     @Override
-    public BrowseProduct save(BrowseProduct bp) {
-        BrowseProduct browseProduct = mongoTemplate.save(bp);
-        return browseProduct;
+    public <T> T save(T t,  String tableName) {
+        T save = mongoTemplate.save(t, tableName);
+        return save;
     }
 
     @Override
-    public List<BrowseProduct> getProducts(String userId) {
+    public <T>List get(String userId, Class<T> t) {
         Query query = new Query(Criteria.where("userId").is(userId));
-        List<BrowseProduct> pros = mongoTemplate.find(query, BrowseProduct.class);
+        List<T> pros = mongoTemplate.find(query, t);
         return pros;
     }
 
     @Override
-    public DeleteResult removeProduct(String userId, String productId) {
-        Query query = new Query(Criteria.where("productId").is(productId));
+    public DeleteResult remove(String userId, String id, String tableName) {
+        Query query = new Query();
+        if ("browse_product".equals(tableName)) {
+            query.addCriteria(Criteria.where("productId").is(id));
+        } else {
+            query.addCriteria(Criteria.where("topicId").is(id));
+        }
         query.addCriteria(Criteria.where("userId").is(userId));
-        DeleteResult remove = mongoTemplate.remove(query, BrowseProduct.class);
+        DeleteResult remove = mongoTemplate.remove(query, tableName);
         return remove;
     }
 }

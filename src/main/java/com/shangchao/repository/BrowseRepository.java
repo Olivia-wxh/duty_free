@@ -2,13 +2,14 @@ package com.shangchao.repository;
 
 import com.mongodb.client.result.DeleteResult;
 import com.shangchao.entity.BrowseProduct;
+import com.shangchao.entity.BrowseTopic;
 
 import java.util.List;
 
 public interface BrowseRepository {
-    BrowseProduct save(BrowseProduct bp);
+    <T> T save(T t, String tableName);
 
-    List<BrowseProduct> getProducts(String userId);
+    <T>List get(String userId, Class<T> t);
 
-    DeleteResult removeProduct(String userId, String productId);
+    DeleteResult remove(String userId, String id, String tableName);
 }
