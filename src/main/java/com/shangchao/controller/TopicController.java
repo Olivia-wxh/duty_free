@@ -80,7 +80,7 @@ public class TopicController {
   @GetMapping("/topicPro/one")
   @ApiOperation("根据ID查询专题,同时查询当前专题下所有商品")
   @ApiImplicitParam(name = "topicId", value = "专题id", required = true)
-  public JSONObject getTopicWithProduct(String topicId) {
+  public JSONObject getTopicWithProduct(@RequestParam String topicId) {
     JSONObject jo = topicService.getTopicWithProduct(topicId);
     return ResponseUtil.success(jo);
   }

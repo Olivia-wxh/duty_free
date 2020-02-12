@@ -13,6 +13,7 @@ import com.shangchao.service.TopicService;
 import com.shangchao.utils.BeanUtil;
 import com.sun.corba.se.impl.oa.toa.TOA;
 import org.bson.types.ObjectId;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.PageRequest;
@@ -22,9 +23,11 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,7 +50,6 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public Topic saveOrUpdateTopic(Topic topic) {
-        //        String topicId = json.getString("topicId").toString();
         Topic save = topicRepository.save(topic);
         return save;
     }
@@ -55,8 +57,10 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public List<Topic> getAllTopic() {
         List<Topic> all = topicRepository.findAll();
-        for (int i = 0; i < all.size(); i++) {
-          all.get(i).setProductIds(null);
+        if (!CollectionUtils.isEmpty(all)) {
+            for (int i = 0; i < all.size(); i++) {
+                all.get(i).setProductIds(null);
+            }
         }
         return all;
     }
@@ -70,7 +74,9 @@ public class TopicServiceImpl implements TopicService {
                 if (oid != null) {
                     for (int j = 0; j < oid.length; j++) {
                         Product byId = productRepository.findById(oid[j].toString());
-                        temp.add(byId);
+                        if (byId != null) {
+                            temp.add(byId);
+                        }
                     }
                 }
             all.get(i).setProduct(temp);
@@ -89,12 +95,14 @@ public class TopicServiceImpl implements TopicService {
         Double cny = Double.parseDouble(cnyStr);
         JSONObject jo = new JSONObject();
         Topic topic = topicRepository.findById(topicId.toString());
-        ObjectId[] oid = topic.getProductIds();
-        List<Product> temp = new ArrayList<>();
-        List<Product> products = productRepository.findProductByBrand(oid);
-        temp = BeanUtil.exeType(products, cny);
-        topic.setProductIds(null);
-        topic.setProduct(temp);
+        if (topic != null) {
+            ObjectId[] oid = topic.getProductIds();
+            List<Product> temp = new ArrayList<>();
+            List<Product> products = productRepository.findProductByBrand(oid);
+            temp = BeanUtil.exeType(products, cny);
+            topic.setProductIds(null);
+            topic.setProduct(temp);
+        }
         jo.put("topic", topic);
         return jo;
     }
@@ -156,7 +164,9 @@ public class TopicServiceImpl implements TopicService {
             ObjectId[] oid = list.get(i).getProductIds();
             if (oid != null) {
                 List<Product> products = productRepository.findProductByBrand(oid);
-                temp = BeanUtil.exeType(products, cny);
+                if (!CollectionUtils.isEmpty(products)) {
+                    temp = BeanUtil.exeType(products, cny);
+                }
             }
             list.get(i).setProduct(temp);
             list.get(i).setProductIds(null);
@@ -170,27 +180,29 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public void resetTopic() {
         List<String> brands = productRepository.getBrands();
-        for (int i = 0; i < brands.size(); i++) {
-            List<Product> proAll = productRepository.findByBrandName(brands.get(i));
-            Topic topic = new Topic();
-            topic.setTopicName(brands.get(i));
-            //设置图片
+        if (!CollectionUtils.isEmpty(brands)) {
+            for (int i = 0; i < brands.size(); i++) {
+                List<Product> proAll = productRepository.findByBrandName(brands.get(i));
+                Topic topic = new Topic();
+                topic.setTopicName(brands.get(i));
+                //设置图片
 //            String[] temp = new String[3];
-            List<String> tempStr = new ArrayList<>();
-            for (int m = 0; m < proAll.size(); m++) {
-                if (tempStr.size() < 3 && proAll.get(m).getImages().size() > 0) {
-                    for (int n = 0; n < proAll.get(m).getImages().size(); n++) {
-                        String img = proAll.get(m).getImages().get(n);
-                        if (img != null && !"".equals(img.replaceAll(" ", ""))) {
-                            tempStr.add(proAll.get(m).getImages().get(n));
+                List<String> tempStr = new ArrayList<>();
+                for (int m = 0; m < proAll.size(); m++) {
+                    if (tempStr.size() < 3 && proAll.get(m).getImages().size() > 0) {
+                        for (int n = 0; n < proAll.get(m).getImages().size(); n++) {
+                            String img = proAll.get(m).getImages().get(n);
+                            if (img != null && !"".equals(img.replaceAll(" ", ""))) {
+                                tempStr.add(proAll.get(m).getImages().get(n));
+                            }
                         }
                     }
                 }
-            }
-            topic.setImages(tempStr);
-            Topic topic1 = saveOrUpdateTopic(topic);
-            for (int mm = 0; mm < proAll.size(); mm++) {
-                setTopic(topic1.getId(), proAll.get(mm).getId());
+                topic.setImages(tempStr);
+                Topic topic1 = saveOrUpdateTopic(topic);
+                for (int mm = 0; mm < proAll.size(); mm++) {
+                    setTopic(topic1.getId(), proAll.get(mm).getId());
+                }
             }
         }
     }
