@@ -1,5 +1,6 @@
 package com.shangchao.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.mongodb.client.result.DeleteResult;
 import com.shangchao.entity.BrowseProduct;
@@ -14,6 +15,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/browse")
@@ -36,7 +39,11 @@ public class BrowseController {
         String userId = params.getString("userId").toString();
         String productId = params.getString("productId").toString();
         BrowseProduct browseProduct = browseService.save(userId, productId, "browse_product");
-        return ResponseUtil.success(browseProduct);
+        if (browseProduct == null) {
+            return ResponseUtil.fail("数据已存在");
+        } else {
+            return ResponseUtil.success(browseProduct);
+        }
     }
 
     /**
@@ -53,14 +60,18 @@ public class BrowseController {
     /**
      * 删除一个商品的浏览记录
      */
-    @GetMapping("/delete")
-    @ApiOperation(value = "删除一个商品的浏览记录")
+    @PostMapping("/delete")
+    @ApiOperation(value = "删除商品的浏览记录")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户id", required = true),
             @ApiImplicitParam(name = "productId", value = "商品id", required = true)
     })
-    public JSONObject delBrowseProduct(String userId, String productId){
-        DeleteResult deleteResult = browseService.delBrowse(userId, productId, "browse_product");
+    public JSONObject delBrowseProduct(@RequestBody JSONObject params){
+        String userId = params.getString("userId").toString();
+        JSONArray jsonArray = params.getJSONArray("productIds");
+        String jsonStr = JSONObject.toJSONString(jsonArray);
+        List<String> productIds = JSONObject.parseArray(jsonStr,  String.class);
+        DeleteResult deleteResult = browseService.delBrowse(userId, productIds, "browse_product");
         return ResponseUtil.success(deleteResult);
     }
 
@@ -77,7 +88,11 @@ public class BrowseController {
         String userId = params.getString("userId").toString();
         String topicId = params.getString("topicId").toString();
         BrowseTopic browseTopic = browseService.save(userId, topicId, "browse_topic");
-        return ResponseUtil.success(browseTopic);
+        if (browseTopic == null) {
+            return ResponseUtil.fail("数据已存在");
+        } else {
+            return ResponseUtil.success(browseTopic);
+        }
     }
 
     /**
@@ -101,7 +116,9 @@ public class BrowseController {
             @ApiImplicitParam(name = "topicId", value = "商品id", required = true)
     })
     public JSONObject delBrowseTopic(String userId, String topicId){
-        DeleteResult deleteResult = browseService.delBrowse(userId, topicId, "browse_topic");
+        List<String> ids = new ArrayList<>();
+        ids.add(topicId);
+        DeleteResult deleteResult = browseService.delBrowse(userId, ids, "browse_topic");
         return ResponseUtil.success(deleteResult);
     }
 }

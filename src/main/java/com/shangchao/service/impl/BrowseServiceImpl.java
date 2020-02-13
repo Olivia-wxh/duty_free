@@ -32,17 +32,27 @@ public class BrowseServiceImpl implements BrowseService {
     @Override
     public <T> T save(String userId, String id, String tableName) {
         if ("browse_product".equals(tableName)) {
-            BrowseProduct bp = new BrowseProduct();
-            bp.setUserId(userId);
-            bp.setProductId(id);
-            BrowseProduct save = browseRepository.save(bp, tableName);
-            return (T) save;
+            BrowseProduct product = browseRepository.getByIdAndUserId(userId, id, "productId", BrowseProduct.class);
+            if (product == null) {
+                BrowseProduct bp = new BrowseProduct();
+                bp.setUserId(userId);
+                bp.setProductId(id);
+                BrowseProduct save = browseRepository.save(bp, tableName);
+                return (T) save;
+            } else {
+                return null;
+            }
         } else {
-            BrowseTopic bt = new BrowseTopic();
-            bt.setUserId(userId);
-            bt.setTopicId(id);
-            BrowseTopic save = browseRepository.save(bt, tableName);
-            return (T) save;
+            BrowseTopic topic = browseRepository.getByIdAndUserId(userId, id, "topicId", BrowseTopic.class);
+            if (topic == null) {
+                BrowseTopic bt = new BrowseTopic();
+                bt.setUserId(userId);
+                bt.setTopicId(id);
+                BrowseTopic save = browseRepository.save(bt, tableName);
+                return (T) save;
+            } else {
+                return null;
+            }
         }
     }
 
@@ -64,8 +74,8 @@ public class BrowseServiceImpl implements BrowseService {
     }
 
     @Override
-    public DeleteResult delBrowse(String userId, String id, String tableName) {
-        DeleteResult deleteResult = browseRepository.remove(userId, id, tableName);
+    public DeleteResult delBrowse(String userId, List<String> ids, String tableName) {
+        DeleteResult deleteResult = browseRepository.remove(userId, ids, tableName);
         return deleteResult;
     }
 

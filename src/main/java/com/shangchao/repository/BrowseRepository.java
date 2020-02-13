@@ -11,5 +11,7 @@ public interface BrowseRepository {
 
     <T>List get(String userId, Class<T> t);
 
-    DeleteResult remove(String userId, String id, String tableName);
+    <T> T getByIdAndUserId(String userId, String id, String paramName, Class<T> t);
+
+    DeleteResult remove(String userId, List<String> ids, String tableName);
 }

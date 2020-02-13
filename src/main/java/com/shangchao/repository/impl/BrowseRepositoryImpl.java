@@ -32,12 +32,20 @@ public class BrowseRepositoryImpl implements BrowseRepository {
     }
 
     @Override
-    public DeleteResult remove(String userId, String id, String tableName) {
+    public <T> T getByIdAndUserId(String userId, String id, String paramName, Class<T> t) {
+        Query query = new Query(Criteria.where("userId").is(userId));
+        query.addCriteria(Criteria.where(paramName).is(id));
+        T one = mongoTemplate.findOne(query, t);
+        return one;
+    }
+
+    @Override
+    public DeleteResult remove(String userId, List<String> ids, String tableName) {
         Query query = new Query();
         if ("browse_product".equals(tableName)) {
-            query.addCriteria(Criteria.where("productId").is(id));
+            query.addCriteria(Criteria.where("productId").in(ids));
         } else {
-            query.addCriteria(Criteria.where("topicId").is(id));
+            query.addCriteria(Criteria.where("topicId").in(ids));
         }
         query.addCriteria(Criteria.where("userId").is(userId));
         DeleteResult remove = mongoTemplate.remove(query, tableName);
