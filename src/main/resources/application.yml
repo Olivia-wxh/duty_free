@@ -66,3 +66,5 @@ logging:
 webchat:
     webChatAppId: wxc37e18c6dcc427d4
     webChatAppSecret: 468030336ef96c59f63c9f787ea0d97d
+    officialAccountsAppId: wx513377a71e122a80
+    officialAccountsAppSecret: 66a2f08b3095634532075913c8c9971a
