@@ -48,17 +48,6 @@ public class WebChatController {
     map.put("appid", ConfigUtil.getCommonYml("webchat.webChatAppId")); // appID
     return map;
   }
-  @GetMapping("/testM")
-  public void testM(){
-    String filePath = "F:/Chrysanthemum.jpg";
-//    String accessToken = wechatAuthService.getAccessToken();
-//    System.out.println("新增临时本地图片素材,返回" + wechatMaterialService.uploadTempMediaFile(accessToken,
-//            WechatMaterialConstant.MATERIAL_UPLOAD_TYPE_IMAGE, filePath));
-    String accessToken = wechatAuthService.getAccessToken();
-    System.out.println("新增永久本地图片素材,返回" + wechatMaterialService.uploadForeverMediaFile(accessToken,
-            WechatMaterialConstant.MATERIAL_UPLOAD_TYPE_IMAGE, filePath));
-
-  }
   @PostMapping("/uploadNewsMedia")
   @ApiOperation("新增永久图文素材")
   @ApiImplicitParams({
