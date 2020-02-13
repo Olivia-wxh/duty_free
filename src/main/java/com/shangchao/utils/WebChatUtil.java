@@ -2,6 +2,11 @@ package com.shangchao.utils;
 
 import com.shangchao.entity.WebChatEntity;
 import net.sf.json.JSONObject;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,7 +35,7 @@ public class WebChatUtil {
   }
 
   // 获取token
-  private static String getAccessToken() {
+  public static String getAccessToken() {
     String access_token = "";
     String grant_type = "client_credential"; // 获取access_token填写client_credential
     String AppId = (String) ConfigUtil.getCommonYml("webchat.webChatAppId"); // 第三方用户唯一凭证
