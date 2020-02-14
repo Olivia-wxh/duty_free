@@ -34,6 +34,8 @@ public class Topic implements Serializable {
   @Field("images")
   private List<String> images;//"/images/imageName.jpg"
 
+  private String shareUrl;
+
   // 引用商品信息
   @DBRef
   private ObjectId[] productIds;

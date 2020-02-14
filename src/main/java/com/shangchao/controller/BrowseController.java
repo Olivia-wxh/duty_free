@@ -64,7 +64,7 @@ public class BrowseController {
     @ApiOperation(value = "删除商品的浏览记录")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户id", required = true),
-            @ApiImplicitParam(name = "productId", value = "商品id", required = true)
+            @ApiImplicitParam(name = "productIds", value = "商品id", required = true)
     })
     public JSONObject delBrowseProduct(@RequestBody JSONObject params){
         String userId = params.getString("userId").toString();
