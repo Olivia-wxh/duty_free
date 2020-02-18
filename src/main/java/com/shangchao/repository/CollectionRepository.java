@@ -23,4 +23,6 @@ public interface CollectionRepository {
     CollectTopic getByUserIdTopicId(String userId, String topicId);
 
     CollectProduct getByUserIdProductId(String userId, String productId);
+
+    long getCount(String userId);
 }

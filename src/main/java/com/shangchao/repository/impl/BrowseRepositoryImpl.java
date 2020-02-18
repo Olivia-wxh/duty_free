@@ -2,6 +2,7 @@ package com.shangchao.repository.impl;
 
 import com.mongodb.client.result.DeleteResult;
 import com.shangchao.entity.BrowseProduct;
+import com.shangchao.entity.CollectProduct;
 import com.shangchao.entity.CollectTopic;
 import com.shangchao.repository.BrowseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,12 @@ public class BrowseRepositoryImpl implements BrowseRepository {
         query.addCriteria(Criteria.where("userId").is(userId));
         DeleteResult remove = mongoTemplate.remove(query, tableName);
         return remove;
+    }
+
+    @Override
+    public long getCount(String userId) {
+        Query query = new Query(Criteria.where("userId").is(userId));
+        long count = mongoTemplate.count(query, BrowseProduct.class);
+        return count;
     }
 }

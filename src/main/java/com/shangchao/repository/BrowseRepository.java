@@ -14,4 +14,6 @@ public interface BrowseRepository {
     <T> T getByIdAndUserId(String userId, String id, String paramName, Class<T> t);
 
     DeleteResult remove(String userId, List<String> ids, String tableName);
+
+    long getCount(String userId);
 }

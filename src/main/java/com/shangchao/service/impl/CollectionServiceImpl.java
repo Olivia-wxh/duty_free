@@ -112,4 +112,10 @@ public class CollectionServiceImpl implements CollectionService {
         jo.put("collectProduct", productList);
         return jo;
     }
+
+    @Override
+    public long getCount(String userId) {
+        long collectCount = collectionRepository.getCount(userId);
+        return collectCount;
+    }
 }

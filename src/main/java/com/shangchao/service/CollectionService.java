@@ -20,4 +20,6 @@ public interface CollectionService {
     JSONObject getTopics(String userId);
 
     JSONObject getProduct(String userId);
+
+    long getCount(String userId);
 }

@@ -75,4 +75,11 @@ public class CollectionRepositoryImpl implements CollectionRepository {
     CollectProduct pro = mongoTemplate.findOne(query, CollectProduct.class);
     return pro;
   }
+
+  @Override
+  public long getCount(String userId) {
+    Query query = new Query(Criteria.where("userId").is(userId));
+    long count = mongoTemplate.count(query, CollectProduct.class);
+    return count;
+  }
 }

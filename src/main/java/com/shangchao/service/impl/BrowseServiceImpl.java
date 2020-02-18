@@ -100,4 +100,10 @@ public class BrowseServiceImpl implements BrowseService {
         jo.put("topic", topicList);
         return jo;
     }
+
+    @Override
+    public long getCount(String userId) {
+        long browseCount = browseRepository.getCount(userId);
+        return browseCount;
+    }
 }

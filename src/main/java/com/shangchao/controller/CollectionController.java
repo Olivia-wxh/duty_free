@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.mongodb.client.result.DeleteResult;
 import com.shangchao.entity.CollectProduct;
 import com.shangchao.entity.CollectTopic;
+import com.shangchao.service.BrowseService;
 import com.shangchao.service.CollectionService;
 import com.shangchao.service.TopicService;
 import com.shangchao.utils.ResponseUtil;
@@ -26,6 +27,26 @@ public class CollectionController {
 
     @Autowired
     private CollectionService collectionService;
+
+    @Autowired
+    private BrowseService browseService;
+
+    /**
+     * 收藏专题
+     */
+    @PostMapping("/count")
+    @ApiOperation(value = "获取收藏数量、浏览数量")
+    @ApiImplicitParam(name = "userId", value = "用户id", required = true)
+    public JSONObject count(@RequestParam String userId){
+        JSONObject jo = new JSONObject();
+        //获取收藏数量
+        long collectCount = collectionService.getCount(userId);
+        //获取浏览数量
+        long browseCount = browseService.getCount(userId);
+        jo.put("collectCount", collectCount);
+        jo.put("browseCount", browseCount);
+        return ResponseUtil.success(jo);
+    }
 
     /**
      * 收藏专题

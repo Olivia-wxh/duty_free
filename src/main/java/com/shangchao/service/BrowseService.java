@@ -17,4 +17,6 @@ public interface BrowseService {
     DeleteResult delBrowse(String userId, List<String> ids, String tableName);
 
     JSONObject getTopics(String userId);
+
+    long getCount(String userId);
 }
