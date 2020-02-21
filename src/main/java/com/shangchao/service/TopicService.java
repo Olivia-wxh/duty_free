@@ -10,5 +10,23 @@ import java.util.List;
 
 public interface TopicService {
 
+  DeleteResult deleteTopicById(String topicId);
 
+  Topic saveOrUpdateTopic(Topic topic);
+
+  List<Topic> getAllTopic();
+
+  List<Topic> getTopicWithProduct();
+
+  JSONObject getTopicWithProduct(String topicId);
+
+  UpdateResult setTopic(String topicId, String productId);
+
+  List<Topic> getByPage(Integer currentPage, Integer pageSize);
+
+  void resetTopic();
+
+  List<TopicImage> getImages();
+
+  Topic getTopicById(String topicId);
 }

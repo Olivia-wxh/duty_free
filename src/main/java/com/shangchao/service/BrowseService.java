@@ -10,5 +10,13 @@ import java.util.List;
 
 public interface BrowseService {
 
+    <T> T save(String userId, String id, String tableName);
 
+    JSONObject getProducts(String userId);
+
+    DeleteResult delBrowse(String userId, List<String> ids, String tableName);
+
+    JSONObject getTopics(String userId);
+
+    long getCount(String userId);
 }

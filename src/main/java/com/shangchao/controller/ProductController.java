@@ -19,6 +19,45 @@ import java.util.List;
 @Api(tags = "产品管理相关接口", description = "如有疑问请联系王晓辉")
 public class ProductController {
 
+  @Autowired private ProductService productService;
+
+  //    /**
+  //     * 查询所有产品信息
+  //     * @return
+  //     */
+  //    @GetMapping("/all")
+  //    public JSONObject getAll(){
+  //        JSONObject jo = new JSONObject();
+  //        List<Product> all = productRepository.findAll();
+  //        jo.put("list", all);
+  //        return jo;
+  //    }
+
+  /**
+   * 根据ID查询单品信息
+   *
+   * @return
+   */
+  @GetMapping("/id")
+  @ApiOperation("根据商品ID获取商品信息")
+  @ApiImplicitParam(name = "productId", value = "商品id", required = true)
+  public JSONObject getById(String productId) {
+    Product product = productService.getById(productId);
+    return ResponseUtil.success(product);
+  }
+
+  /**
+   * 根据主题ID查询产品信息
+   *
+   * @return
+   */
+//  @GetMapping("/topicId")
+//  @ApiOperation("根据专题ID获取商品集信息")
+//  @ApiImplicitParam(name = "topicId", value = "专题id", required = true)
+//  public JSONObject getByTopic(String topicId) {
+//    List<Product> product = productService.getByTopic(topicId);
+//    return ResponseUtil.success(product);
+//  }
 
 
 }

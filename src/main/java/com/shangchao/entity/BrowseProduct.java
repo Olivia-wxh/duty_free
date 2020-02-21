@@ -12,4 +12,16 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @ApiModel // swagger注解
 public class BrowseProduct {
 
+  @ApiModelProperty(value = "主键id")
+  @Id // 在属性上添加@Filed注解，值为对应的字段名
+  //    @Field("_id")
+  private String id;
+
+  @ApiModelProperty(value = "用户ID")
+  @Field("userId")
+  private String userId;
+
+  @ApiModelProperty(value = "产品ID")
+  @Field("productId")
+  private String productId;
 }

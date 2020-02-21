@@ -17,4 +17,14 @@ import java.util.List;
 @ApiModel // swagger注解
 public class TopicImage implements Serializable {
 
+  @ApiModelProperty(value = "ID")
+  @Id
+  @Field("_id")
+  private String id;
+
+  @ApiModelProperty(value = "轮播图url")
+  @Field("imageUrl")
+  private String imageUrl;//"/images/imageName.jpg"
+
+  private String topicId;
 }
