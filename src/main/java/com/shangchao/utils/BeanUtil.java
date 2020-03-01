@@ -30,9 +30,10 @@ public class BeanUtil {
             if (infos != null) {
                 String in = "";
                 for (int aa = 0; aa < infos.length; aa++) {
-                    in = in + infos[aa][0] + ":" + infos[aa][1] + "。";
+                    in = in + infos[aa][0] + ":" + infos[aa][1] + "。\n";
                 }
-                Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+//                Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+                Pattern p = Pattern.compile("\r");
                 Matcher m = p.matcher(in);
                 in = m.replaceAll("");
                 byId.setProductInfo(in);
