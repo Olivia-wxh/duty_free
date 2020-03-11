@@ -88,10 +88,15 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public JSONObject getTopicWithProduct(String topicId) {
         //查询汇率
+        String cnyStr = "";
         Query query = new Query();
         query.with(Sort.by(Sort.Order.desc("addtime")));
         List<ExchangeRate> rate = mongoTemplate.find(query, ExchangeRate.class, "sc_usd_rate");
-        String cnyStr = rate.get(0).getCny();
+        if(rate.size() == 0) {
+            cnyStr = "0.00";
+        } else {
+            cnyStr = rate.get(0).getCny();
+        }
         Double cny = Double.parseDouble(cnyStr);
         JSONObject jo = new JSONObject();
         Topic topic = topicRepository.findById(topicId.toString());

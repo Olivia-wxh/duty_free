@@ -66,8 +66,12 @@ public class ProductRepositoryImpl implements ProductRepository {
     Query query = new Query();
     query.with(Sort.by(Sort.Order.desc("addtime")));
     ExchangeRate rate = mongoTemplate.findOne(query, ExchangeRate.class, "sc_usd_rate");
-    String cnyStr = rate.getCny();
-    Double cny = Double.parseDouble(cnyStr);
-    return cny;
+    if(rate != null) {
+      String cnyStr = rate.getCny();
+      Double cny = Double.parseDouble(cnyStr);
+      return cny;
+    } else {
+      return 1.00;
+    }
   }
 }

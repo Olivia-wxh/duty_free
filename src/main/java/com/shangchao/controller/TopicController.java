@@ -103,8 +103,8 @@ public class TopicController {
 //    return ResponseUtil.success(topic);
 //  }
 
-//  @GetMapping("/resetTopic")
-//  public void resetTopic(){
-//    topicService.resetTopic();
-//  }
+  @GetMapping("/resetTopic")
+  public void resetTopic(){
+    topicService.resetTopic();
+  }
 }
