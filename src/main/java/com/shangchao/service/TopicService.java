@@ -5,6 +5,7 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import com.shangchao.entity.Topic;
 import com.shangchao.entity.TopicImage;
+import org.bson.types.ObjectId;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface TopicService {
 
   JSONObject getTopicWithProduct(String topicId);
 
-  UpdateResult setTopic(String topicId, String productId);
+  UpdateResult setTopic(String topicId, ObjectId[] productId);
 
   List<Topic> getByPage(Integer currentPage, Integer pageSize);
 

@@ -30,18 +30,23 @@ public class TopicRepositoryImpl implements TopicRepository {
   }
 
   @Override
-  public Topic save(Topic topic) {
-    Topic save = mongoTemplate.save(topic);
-    return save;
+  public Topic saveOrUpdateTopic(Topic topic) {
+    Query query = new Query(Criteria.where("topicName").is(topic.getTopicName()));
+    Topic one = mongoTemplate.findOne(query, Topic.class);
+    if (one == null) {
+      Topic save = mongoTemplate.save(topic);
+      return save;
+    }
+    return one;
   }
 
   @Override
-  public UpdateResult update(String topicId, ObjectId productId) {
+  public UpdateResult update(String topicId, ObjectId[] productId) {
     Query query = new Query();
     query.addCriteria(Criteria.where("_id").is(topicId));
     Update update = new Update();
-    update.addToSet("productIds", productId);
-    UpdateResult sc_topic = mongoTemplate.upsert(query, update, "sc_topic");
+    Update productIds = update.set("productIds", productId);
+    UpdateResult sc_topic = mongoTemplate.upsert(query, productIds, "sc_topic");
     return sc_topic;
   }
 

@@ -12,6 +12,7 @@ import com.shangchao.repository.TopicRepository;
 import com.shangchao.service.TopicService;
 import com.shangchao.utils.BeanUtil;
 import com.sun.corba.se.impl.oa.toa.TOA;
+import org.bson.BsonValue;
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public Topic saveOrUpdateTopic(Topic topic) {
-        Topic save = topicRepository.save(topic);
+        Topic save = topicRepository.saveOrUpdateTopic(topic);
         return save;
     }
 
@@ -154,8 +155,8 @@ public class TopicServiceImpl implements TopicService {
 //    }
 
     @Override
-    public UpdateResult setTopic(String topicId, String productId) {
-        UpdateResult save = topicRepository.update(topicId, new ObjectId(productId));
+    public UpdateResult setTopic(String topicId, ObjectId[] productId) {
+        UpdateResult save = topicRepository.update(topicId, productId);
         return save;
     }
 
@@ -205,9 +206,11 @@ public class TopicServiceImpl implements TopicService {
                 }
                 topic.setImages(tempStr);
                 Topic topic1 = saveOrUpdateTopic(topic);
+                ObjectId[] ids = new ObjectId[proAll.size()];
                 for (int mm = 0; mm < proAll.size(); mm++) {
-                    setTopic(topic1.getId(), proAll.get(mm).getId());
+                    ids[mm] = new ObjectId(proAll.get(mm).getId());
                 }
+                setTopic(topic1.getId(), ids);
             }
         }
     }

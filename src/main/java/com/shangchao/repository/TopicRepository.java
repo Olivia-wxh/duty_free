@@ -12,9 +12,9 @@ public interface TopicRepository {
 
   DeleteResult deleteById(String topicId);
 
-  Topic save(Topic topic);
+  Topic saveOrUpdateTopic(Topic topic);
 
-  public UpdateResult update(String topicId, ObjectId productId);
+  public UpdateResult update(String topicId, ObjectId[] productId);
 
   List<Topic> findAll();
 
