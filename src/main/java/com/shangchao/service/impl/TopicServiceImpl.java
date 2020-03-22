@@ -29,6 +29,7 @@ import org.springframework.util.CollectionUtils;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -162,17 +163,60 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public List<Topic> getByPage(Integer currentPage, Integer pageSize) {
+//        System.out.println("start-time:" + new Date(System.currentTimeMillis()));
         Double cny = productRepository.getRate();
+//        System.out.println("getRate-time:" + new Date(System.currentTimeMillis()));
         List<Topic> list = topicRepository.getByPage(currentPage, pageSize);
+//        System.out.println("getTopic-time:" + new Date(System.currentTimeMillis()));
         List<Topic> result = new ArrayList<>();
+//        for (int i = 0; i < list.size(); i++) {
+//            List<Product> temp = new ArrayList<>();
+//            ObjectId[] oid = list.get(i).getProductIds();
+//            if (oid != null) {
+//                List<Product> products = productRepository.findProductByBrand(oid);
+//                if (!CollectionUtils.isEmpty(products)) {
+//                    temp = BeanUtil.exeType(products, cny);
+//                }
+//            }
+//            list.get(i).setProduct(temp);
+//            list.get(i).setProductIds(null);
+//            if (temp.size() > 0) {
+//                result.add(list.get(i));
+//            }
+//        }
+
+        /**
+         * 优化for循环，新的思路：
+         * 上面的for循环只用来统计需要的productIds
+         */
+        ObjectId[] oid = new ObjectId[0];
+        for (int i = 0; i < list.size(); i++) {
+            ObjectId[] oid1 = list.get(i).getProductIds();
+            if (oid.length == 0) {
+                oid = oid1;
+            } else {
+                int len = oid.length + oid1.length;
+                ObjectId[] oid2 = new ObjectId[len];
+                for (int j = 0; j < oid1.length; j++) {
+                    oid2[j] = oid1[j];
+                }
+                //再把原oid中的元素循环放进来
+                for (int j = 0; j < oid.length; j++) {
+                    int len2 = oid1.length + j;
+                    oid2[len2] = oid[j];
+                }
+            }
+        }
+        List<Product> products = productRepository.findProductByBrand(oid);
         for (int i = 0; i < list.size(); i++) {
             List<Product> temp = new ArrayList<>();
-            ObjectId[] oid = list.get(i).getProductIds();
-            if (oid != null) {
-                List<Product> products = productRepository.findProductByBrand(oid);
-                if (!CollectionUtils.isEmpty(products)) {
-                    temp = BeanUtil.exeType(products, cny);
+            for (int j = 0; j < products.size(); j++) {
+                if (products.get(j).getBrandName().equals(list.get(i).getTopicName())) {
+                    temp.add(products.get(j));
                 }
+            }
+            if (!CollectionUtils.isEmpty(temp)) {
+                temp = BeanUtil.exeType(temp, cny);
             }
             list.get(i).setProduct(temp);
             list.get(i).setProductIds(null);
@@ -180,6 +224,7 @@ public class TopicServiceImpl implements TopicService {
                 result.add(list.get(i));
             }
         }
+//        System.out.println("setPro-time:" + new Date(System.currentTimeMillis()));
         return result;
     }
 
