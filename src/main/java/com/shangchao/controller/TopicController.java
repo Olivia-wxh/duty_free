@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,9 @@ import java.util.List;
 @Api(tags = "专题管理相关接口", description = "如有疑问请联系王晓辉")
 public class TopicController {
 
-  @Autowired private TopicService topicService;
+    @Resource
+    private TopicService topicService;
+
 
   /** delete topic */
 //  @DeleteMapping("/delete")

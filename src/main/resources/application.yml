@@ -7,11 +7,13 @@ server:
 spring:
   data:
     mongodb:
-      host: 118.190.172.69
+      host: 47.96.93.202
       ##端口号
       port: 27017
       #数据库名称
       database: shangchao
+      username: root
+      password: Dwzc-123@
 
 
   main:

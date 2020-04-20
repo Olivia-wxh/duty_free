@@ -106,6 +106,17 @@ public class TopicServiceImpl implements TopicService {
             ObjectId[] oid = topic.getProductIds();
             List<Product> temp = new ArrayList<>();
             List<Product> products = productRepository.findProductByBrand(oid);
+//            for (int i = 0; i < products.size(); i++) {
+//                if (products.get(i).getImages().size() > 0) {
+//                    if (products.get(i).getImages().size() == 1) {
+//                        if (!"".equals(products.get(i).getImages().get(0)) && products.get(i).getImages().get(0) != null) {
+//                            temp.add(products.get(i));
+//                        }
+//                    } else {
+//                        temp.add(products.get(i));
+//                    }
+//                }
+//            }
             temp = BeanUtil.exeType(products, cny);
             topic.setProductIds(null);
             topic.setProduct(temp);
@@ -205,6 +216,9 @@ public class TopicServiceImpl implements TopicService {
                     int len2 = oid1.length + j;
                     oid2[len2] = oid[j];
                 }
+                //把oid2复制给oid，保持oid最新、最准确
+                oid = new ObjectId[oid2.length];
+                oid = oid2;
             }
         }
         List<Product> products = productRepository.findProductByBrand(oid);
