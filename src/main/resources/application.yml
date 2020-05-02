@@ -33,11 +33,11 @@ spring:
               pool-name: ShangchaoHikariCP
           password: Dwzc_123@
           type: com.zaxxer.hikari.HikariDataSource
-          url: jdbc:mysql://118.190.172.69:3306/shangchao?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+          url: jdbc:mysql://47.96.93.202:3306/shangchao?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
           username: root
   redis:
     database: 0
-    host: 118.190.172.69
+    host: 47.96.93.202
     port: 6379
     password:
     lettuce:
