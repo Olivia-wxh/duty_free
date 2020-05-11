@@ -107,4 +107,30 @@ public class LoginController {
     //        }
     return result;
   }
+
+  @PostMapping(value = "/weChatLoginForIOS")
+  @ApiOperation("IOS微信登录接口")
+  @ApiImplicitParams({
+          @ApiImplicitParam(name = "code", value = "微信获取code", required = true)
+  })
+  public Map weChatLoginForIOS(@RequestBody JSONObject params, HttpServletResponse response) {
+    //        String username=loginInfo.get("username");
+    //        String password=loginInfo.get("password");
+    //        User vo = this.userService.getUserByUserName(username);
+    String code = params.getString("code").toString();
+    Map result = this.userService.weChatLoginForIOS(code, response);
+
+    //        System.out.println("=====:"+SM3Digest.summary(password));
+    //        if (null != vo && vo.getPassword().equals(SM3Digest.summary(password))) {
+    //            String tokenStr = JwtUtil.sign(username, password);
+    //            userService.addTokenToRedis(username, tokenStr);
+    //            result.put("code", CodeAndMsgEnum.SUCCESS.getcode());
+    //            result.put("msg", "登录成功！");
+    //            response.setHeader("Authorization", tokenStr);
+    //        } else {
+    //            result.put("code", CodeAndMsgEnum.ERROR.getcode());
+    //            result.put("msg", "帐号或密码错误！");
+    //        }
+    return result;
+  }
 }

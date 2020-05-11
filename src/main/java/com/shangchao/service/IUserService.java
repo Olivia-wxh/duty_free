@@ -25,4 +25,6 @@ public interface IUserService {
   void saveUser(User user);
 
   Map weChatLogin(String code, HttpServletResponse response);
+
+  Map weChatLoginForIOS(String code, HttpServletResponse response);
 }

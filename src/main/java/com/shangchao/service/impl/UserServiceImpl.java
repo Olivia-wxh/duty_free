@@ -218,4 +218,75 @@ public class UserServiceImpl extends AbstractService implements IUserService {
       return ResponseUtil.fail("登录失败");
     }
   }
+
+  @Override
+  public Map weChatLoginForIOS(String code, HttpServletResponse response) {
+    try {
+      // 通过第一步获得的code获取微信授权信息
+      String url =
+              "https://api.weixin.qq.com/sns/oauth2/access_token?appid="
+                      + ConfigUtil.getCommonYml("webchat.webChatIOSAppId")
+                      + "&secret="
+                      + ConfigUtil.getCommonYml("webchat.webChatIOSAppSecret")
+                      + "&code="
+                      + code
+                      + "&grant_type=authorization_code";
+      JSONObject userInfo=null;
+      JSONObject jsonObject =null;
+      Object value = hashMap.get(code);
+      if (value != null) {
+        userInfo=(JSONObject)value;
+      }else{
+        jsonObject = AuthUtil.doGetJson(url);
+        String openid = jsonObject.getString("openid");
+        String token = jsonObject.getString("access_token");
+        String infoUrl =
+                "https://api.weixin.qq.com/sns/userinfo?access_token="
+                        + token
+                        + "&openid="
+                        + openid
+                        + "&lang=zh_CN";
+        userInfo = AuthUtil.doGetJson(infoUrl);
+        userInfo.put("openid",openid);
+        hashMap.put(code,userInfo);
+      }
+
+
+      // 成功获取授权,以下部分为业务逻辑处理了，根据个人业务需求写就可以了
+      if (userInfo != null) {
+        String nickname = userInfo.getString("nickname");
+        String headimgurl = userInfo.getString("headimgurl");
+        String openid = userInfo.getString("openid");
+        headimgurl = headimgurl.replace("\\", "");
+        // 根据openid查询时候有用户信息
+        User user = userDAO.findByOpenId(openid);
+        if (Objects.isNull(user)) {
+
+          // 没有绑定用户请前往绑定
+          user = new User();
+          user.setLock(0);
+          user.setOpenId(openid);
+          user.setNickName(nickname);
+          user.setHeadImgUrl(headimgurl);
+          user.setUserName(RandomUtil.getStringRandom(10));
+          user.setPassword(SM3Digest.summary(RandomUtil.genRandomPwd(10)));
+          this.saveUser(user);
+        }
+        String tokenStr = JwtUtil.sign(user.getUserName(), user.getPassword());
+        this.addTokenToRedis(user.getUserName(), tokenStr);
+        response.setHeader("Authorization", tokenStr);
+        user.setPassword("");
+        HashMap map = new HashMap();
+        map.put("openid", openid);
+        map.put("user", user);
+        return ResponseUtil.success("登录成功！", map);
+      } else {
+        log.error("ISO微信远程调用token失败：{}{}", jsonObject.get("errcode"), jsonObject.get("errmsg"));
+        return ResponseUtil.fail("IOS登录失败");
+      }
+    } catch (Exception e) {
+      log.error("IOS微信登录失败：{}", e.getMessage());
+      return ResponseUtil.fail("IOS登录失败");
+    }
+  }
 }
