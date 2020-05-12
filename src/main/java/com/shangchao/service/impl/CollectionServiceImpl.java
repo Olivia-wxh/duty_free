@@ -13,6 +13,7 @@ import com.shangchao.service.ProductService;
 import com.shangchao.service.TopicService;
 import com.shangchao.utils.BeanUtil;
 import org.bson.types.ObjectId;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -107,7 +108,9 @@ public class CollectionServiceImpl implements CollectionService {
         List<Product> productList = new ArrayList<>();
         for (int i = 0; i < collectProducts.size(); i++) {
             Product product = productService.getById(collectProducts.get(i).getProductId());
-            productList.add(product);
+            if (product != null) {
+                productList.add(product);
+            }
         }
         jo.put("collectProduct", productList);
         return jo;
