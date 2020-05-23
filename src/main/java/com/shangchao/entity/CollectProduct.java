@@ -24,4 +24,6 @@ public class CollectProduct {
   @ApiModelProperty(value = "产品ID")
   @Field("productId")
   private String productId;
+
+
 }
