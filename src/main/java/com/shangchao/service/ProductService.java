@@ -1,12 +1,15 @@
 package com.shangchao.service;
 
 import com.shangchao.entity.Product;
+import com.shangchao.entity.dto.ScProductQueryDto;
 
 import java.util.List;
 
 public interface ProductService {
-  Product getById(String productId);
 
-  List<Product> getByTopic(String topicId);
+    Product getById(String productId);
 
+    List<Product> getByTopic(String topicId);
+
+    List<Product> queryProductPageList(ScProductQueryDto queryDto);
 }

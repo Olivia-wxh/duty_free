@@ -3,6 +3,7 @@ package com.shangchao.service.impl;
 import com.shangchao.entity.ExchangeRate;
 import com.shangchao.entity.Product;
 import com.shangchao.entity.Topic;
+import com.shangchao.entity.dto.ScProductQueryDto;
 import com.shangchao.repository.ProductRepository;
 import com.shangchao.repository.TopicRepository;
 import com.shangchao.service.ProductService;
@@ -73,6 +74,11 @@ public class ProductServiceImpl implements ProductService {
       }
     return list;
   }
+
+    @Override
+    public List<Product> queryProductPageList(ScProductQueryDto queryDto) {
+        return productRepository.queryProductPageList(queryDto);
+    }
 
 
 }
