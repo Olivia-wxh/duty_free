@@ -82,9 +82,6 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public List<Product> queryProductPageList(ScProductQueryDto queryDto) {
         List<AggregationOperation> aggregationOperations = new LinkedList<>();
-        Criteria criteria = new Criteria();
-        MatchOperation match = Aggregation.match(criteria);
-        aggregationOperations.add(match);
         //分页
         SkipOperation skip = Aggregation.skip((long) (queryDto.getPageNumber() - 1) * queryDto.getPageSize());
         LimitOperation limit = Aggregation.limit(queryDto.getPageSize());
