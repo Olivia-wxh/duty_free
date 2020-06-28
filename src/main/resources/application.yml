@@ -66,9 +66,9 @@ jwt:
 logging:
   config: classpath:log4j2-spring.xml
 webchat:
-    webChatAppId: wxc37e18c6dcc427d4
-    webChatAppSecret: 468030336ef96c59f63c9f787ea0d97d
-    webChatIOSAppId: wx88f52e775cee9eb3
-    webChatIOSAppSecret: 39c62fd94ebb08e08f212d10162366d5
+    webChatAppId: wx78c209a7e241fc12
+    webChatAppSecret: 76a056d47b0835cff5ecfbf311d402ae
+    webChatIOSAppId: wx78c209a7e241fc12
+    webChatIOSAppSecret: 76a056d47b0835cff5ecfbf311d402ae
     officialAccountsAppId: wx513377a71e122a80
     officialAccountsAppSecret: 66a2f08b3095634532075913c8c9971a
