@@ -176,9 +176,9 @@ public class TopicServiceImpl implements TopicService {
     public List<Topic> getByPage(Integer currentPage, Integer pageSize) {
 //        System.out.println("start-time:" + new Date(System.currentTimeMillis()));
         Double cny = productRepository.getRate();
-//        System.out.println("getRate-time:" + new Date(System.currentTimeMillis()));
+        System.out.println("getRate-time:" + new Date(System.currentTimeMillis()));
         List<Topic> list = topicRepository.getByPage(currentPage, pageSize);
-//        System.out.println("getTopic-time:" + new Date(System.currentTimeMillis()));
+        System.out.println("service：getTopic-time:" + new Date(System.currentTimeMillis()));
         List<Topic> result = new ArrayList<>();
 //        for (int i = 0; i < list.size(); i++) {
 //            List<Product> temp = new ArrayList<>();
@@ -221,7 +221,9 @@ public class TopicServiceImpl implements TopicService {
                 oid = oid2;
             }
         }
+        System.out.println("封装oid：" + new Date(System.currentTimeMillis()));
         List<Product> products = productRepository.findProductByBrand(oid);
+        System.out.println("查询专题产品：" + new Date(System.currentTimeMillis()));
         for (int i = 0; i < list.size(); i++) {
             List<Product> temp = new ArrayList<>();
             for (int j = 0; j < products.size(); j++) {

@@ -1,11 +1,15 @@
 package com.shangchao.repository.impl;
 
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.shangchao.entity.ExchangeRate;
 import com.shangchao.entity.Product;
 import com.shangchao.entity.dto.ScProductQueryDto;
 import com.shangchao.repository.ProductRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.*;
@@ -55,12 +59,21 @@ public class ProductRepositoryImpl implements ProductRepository {
         return products;
     }
 
+    @Cacheable(value = "pros")
     @Override
     public List<Product> findProductByBrand(ObjectId[] oid) {
         Query query = new Query();
         query.addCriteria(Criteria.where("images").ne("").not().size(0));
         query.addCriteria(Criteria.where("_id").in(oid));
         List<Product> products = mongoTemplate.find(query, Product.class);
+//
+//        DBObject queryCondition = new BasicDBObject();
+//        //age in [13, 47]
+//        queryCondition = new BasicDBObject();
+//        BasicDBList values = new BasicDBList();
+//        values.addAll(oid);
+//        queryCondition.put("_id", new BasicDBObject("$in", values));
+//        mongoTemplate.find(queryCondition);
         return products;
     }
 

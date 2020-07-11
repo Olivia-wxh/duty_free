@@ -3,8 +3,12 @@ server:
   port: 9999
 ##mongo配置
 
+
 ##mongo主机地址
 spring:
+  cache:
+    ehcache:
+      config: classpath:ehcache.xml
   data:
     mongodb:
       host: 47.96.93.202
