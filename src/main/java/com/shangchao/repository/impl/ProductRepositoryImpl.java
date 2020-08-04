@@ -66,14 +66,6 @@ public class ProductRepositoryImpl implements ProductRepository {
         query.addCriteria(Criteria.where("images").ne("").not().size(0));
         query.addCriteria(Criteria.where("_id").in(oid));
         List<Product> products = mongoTemplate.find(query, Product.class);
-//
-//        DBObject queryCondition = new BasicDBObject();
-//        //age in [13, 47]
-//        queryCondition = new BasicDBObject();
-//        BasicDBList values = new BasicDBList();
-//        values.addAll(oid);
-//        queryCondition.put("_id", new BasicDBObject("$in", values));
-//        mongoTemplate.find(queryCondition);
         return products;
     }
 

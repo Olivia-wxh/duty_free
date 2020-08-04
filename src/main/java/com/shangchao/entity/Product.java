@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -15,6 +17,10 @@ import java.util.List;
 @Data // 使用@Data注解，实体类可以省略get set方法
 @Document(collection = "sc_product") // 在实体添加@Document注解，collection= "对应的表名"
 @ApiModel // swagger注解
+@CompoundIndexes(
+{
+    @CompoundIndex(name = "_id",def = "{'id':1}")
+})
 public class Product implements Serializable {
 
     @ApiModelProperty(value = "产品id")

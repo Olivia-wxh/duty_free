@@ -68,18 +68,18 @@ public class TopicController {
           "每个专题的imgUrl字段存储一张代表当前专题的图片，用于轮播图展示；")
   @ApiImplicitParam(name = "currentPage", value = "当前页数")
   public JSONObject getTopicWithProduct(@RequestParam Integer currentPage) {
-    System.out.println("start-time:" + new Date(System.currentTimeMillis()));
+    System.out.println("start-time:" + System.currentTimeMillis());
     Integer pageSize = 10;
     JSONObject in = new JSONObject();
 //    List<Topic> topicList = topicService.getTopicWithProduct();
     //查找专题
     List<Topic> topicList = topicService.getByPage(currentPage, pageSize);
-    System.out.println("getTopic-time:" + new Date(System.currentTimeMillis()));
+    System.out.println("getTopic-time:" + System.currentTimeMillis());
     in.put("topic", topicList);
     //查找专题轮播图
     List<TopicImage> imageList = topicService.getImages();
     in.put("images", imageList);
-    System.out.println("end-time:" + new Date(System.currentTimeMillis()));
+    System.out.println("end-time:" + System.currentTimeMillis());
     return ResponseUtil.success(in);
   }
 

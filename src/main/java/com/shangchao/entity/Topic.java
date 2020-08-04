@@ -5,6 +5,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -15,6 +18,12 @@ import java.util.List;
 @Data
 @Document(collection = "sc_topic") // 对应mongodb表
 @ApiModel // swagger注解
+/*
+建立索引，提高查询速度 */
+@CompoundIndexes(
+{
+  @CompoundIndex(name = "_id",def = "{'id':1}")
+})
 public class Topic implements Serializable {
 
   @ApiModelProperty(value = "专题ID")
