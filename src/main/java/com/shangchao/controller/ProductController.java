@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -62,16 +63,16 @@ public class ProductController {
     }
 
     /**
-     * 根据主题ID查询产品信息
+     * 根据专题ID获取商品集信息
      *
      * @return
      */
-//  @GetMapping("/topicId")
-//  @ApiOperation("根据专题ID获取商品集信息")
-//  @ApiImplicitParam(name = "topicId", value = "专题id", required = true)
-//  public JSONObject getByTopic(String topicId) {
-//    List<Product> product = productService.getByTopic(topicId);
-//    return ResponseUtil.success(product);
-//  }
+      @GetMapping("/topicId")
+      @ApiOperation("根据专题ID获取商品集信息")
+      @ApiImplicitParam(name = "topicId", value = "专题id", required = true)
+      public JSONObject getByTopic(@RequestParam Integer currentPage, String topicId) {
+          List<Product> product = productService.getByTopic(topicId, currentPage);
+          return ResponseUtil.success(product);
+      }
 
 }

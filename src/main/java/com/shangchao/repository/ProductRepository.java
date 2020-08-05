@@ -20,6 +20,8 @@ public interface ProductRepository {
 
   List<Product> findProductByBrand(ObjectId[] oid);
 
+  List<Product> findProductByPage(ObjectId[] oid, Integer currentPage);
+
   Double getRate();
 
   List<Product> queryProductPageList(ScProductQueryDto queryDto);

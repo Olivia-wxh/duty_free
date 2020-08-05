@@ -65,13 +65,14 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public List<Product> getByTopic(String topicId) {
+  public List<Product> getByTopic(String topicId, Integer currentPage) {
       Topic topic = topicRepository.findById(topicId.toString());
-      List<Product> list = new ArrayList<>();
-      for (int i = 0; i < topic.getProductIds().length; i++) {
-        Product byId = productRepository.findById(topic.getProductIds()[i].toString());
-        list.add(byId);
-      }
+//      List<Product> list = new ArrayList<>();
+      List<Product> list = productRepository.findProductByPage(topic.getProductIds(), currentPage);
+//      for (int i = 0; i < topic.getProductIds().length; i++) {
+//        Product byId = productRepository.findById(topic.getProductIds()[i].toString());
+//        list.add(byId);
+//      }
     return list;
   }
 

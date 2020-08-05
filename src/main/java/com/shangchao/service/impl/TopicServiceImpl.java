@@ -179,15 +179,45 @@ public class TopicServiceImpl implements TopicService {
         System.out.println("getRate-time:" + System.currentTimeMillis());
         List<Topic> list = topicRepository.getByPage(currentPage, pageSize);
         System.out.println("service：getTopic-time:" + System.currentTimeMillis());
-        List<Topic> result = new ArrayList<>();
+//        List<Topic> result = new ArrayList<>();
+
+        /**
+         * 优化for循环，新的思路：
+         * 上面的for循环只用来统计需要的productIds
+         */
+//        ObjectId[] oid = new ObjectId[0];
+//        for (int i = 0; i < list.size(); i++) {
+//            ObjectId[] oid1 = list.get(i).getProductIds();
+//            if (oid.length == 0) {
+//                oid = oid1;
+//            } else {
+//                int len = oid.length + oid1.length;
+//                ObjectId[] oid2 = new ObjectId[len];
+//                for (int j = 0; j < oid1.length; j++) {
+//                    oid2[j] = oid1[j];
+//                }
+//                //再把原oid中的元素循环放进来
+//                for (int j = 0; j < oid.length; j++) {
+//                    int len2 = oid1.length + j;
+//                    oid2[len2] = oid[j];
+//                }
+//                //把oid2复制给oid，保持oid最新、最准确
+//                oid = new ObjectId[oid2.length];
+//                oid = oid2;
+//            }
+//        }
+//        System.out.println("封装oid：" + System.currentTimeMillis());
+//        List<Product> products = productRepository.findProductByBrand(oid);
+//        System.out.println("查询专题产品：" + System.currentTimeMillis());
 //        for (int i = 0; i < list.size(); i++) {
 //            List<Product> temp = new ArrayList<>();
-//            ObjectId[] oid = list.get(i).getProductIds();
-//            if (oid != null) {
-//                List<Product> products = productRepository.findProductByBrand(oid);
-//                if (!CollectionUtils.isEmpty(products)) {
-//                    temp = BeanUtil.exeType(products, cny);
+//            for (int j = 0; j < products.size(); j++) {
+//                if (products.get(j).getBrandName().equals(list.get(i).getTopicName())) {
+//                    temp.add(products.get(j));
 //                }
+//            }
+//            if (!CollectionUtils.isEmpty(temp)) {
+//                temp = BeanUtil.exeType(temp, cny);
 //            }
 //            list.get(i).setProduct(temp);
 //            list.get(i).setProductIds(null);
@@ -195,53 +225,7 @@ public class TopicServiceImpl implements TopicService {
 //                result.add(list.get(i));
 //            }
 //        }
-
-        /**
-         * 优化for循环，新的思路：
-         * 上面的for循环只用来统计需要的productIds
-         */
-        ObjectId[] oid = new ObjectId[0];
-        for (int i = 0; i < list.size(); i++) {
-            ObjectId[] oid1 = list.get(i).getProductIds();
-            if (oid.length == 0) {
-                oid = oid1;
-            } else {
-                int len = oid.length + oid1.length;
-                ObjectId[] oid2 = new ObjectId[len];
-                for (int j = 0; j < oid1.length; j++) {
-                    oid2[j] = oid1[j];
-                }
-                //再把原oid中的元素循环放进来
-                for (int j = 0; j < oid.length; j++) {
-                    int len2 = oid1.length + j;
-                    oid2[len2] = oid[j];
-                }
-                //把oid2复制给oid，保持oid最新、最准确
-                oid = new ObjectId[oid2.length];
-                oid = oid2;
-            }
-        }
-        System.out.println("封装oid：" + System.currentTimeMillis());
-        List<Product> products = productRepository.findProductByBrand(oid);
-        System.out.println("查询专题产品：" + System.currentTimeMillis());
-        for (int i = 0; i < list.size(); i++) {
-            List<Product> temp = new ArrayList<>();
-            for (int j = 0; j < products.size(); j++) {
-                if (products.get(j).getBrandName().equals(list.get(i).getTopicName())) {
-                    temp.add(products.get(j));
-                }
-            }
-            if (!CollectionUtils.isEmpty(temp)) {
-                temp = BeanUtil.exeType(temp, cny);
-            }
-            list.get(i).setProduct(temp);
-            list.get(i).setProductIds(null);
-            if (temp.size() > 0) {
-                result.add(list.get(i));
-            }
-        }
-//        System.out.println("setPro-time:" + new Date(System.currentTimeMillis()));
-        return result;
+        return list;
     }
 
     @Override

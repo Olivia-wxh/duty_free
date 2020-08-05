@@ -60,10 +60,12 @@ public class TopicController {
 //    return ResponseUtil.success(topicList);
 //  }
 
-  /** 专题查询2：查询所有专题,同时查询每个专题下所有商品 */
+  /** 专题查询2：查询所有专题,同时查询每个专题下所有商品
+   *  由于效率问题，暂定只查询专题不同步查询产品
+   */
   @GetMapping("/topicPro")
   @ApiOperation(value = "client-获取首页", notes = "currentPage表示的是当前页数（必传），从0开始；" +
-          "每次请求返回10个专题，以及专题下所有的商品信息，点击专题进入专题下商品二级页面无需再次请求接口；" +
+          "每次请求返回10个专题，点击专题进入专题下商品二级页面需要请求接口/api/product/topicId；" +
           "第一页即currentPage=0时需要展示轮播图；" +
           "每个专题的imgUrl字段存储一张代表当前专题的图片，用于轮播图展示；")
   @ApiImplicitParam(name = "currentPage", value = "当前页数")

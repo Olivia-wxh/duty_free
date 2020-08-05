@@ -5,11 +5,14 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.shangchao.entity.ExchangeRate;
 import com.shangchao.entity.Product;
+import com.shangchao.entity.Topic;
 import com.shangchao.entity.dto.ScProductQueryDto;
 import com.shangchao.repository.ProductRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.*;
@@ -69,6 +72,18 @@ public class ProductRepositoryImpl implements ProductRepository {
         return products;
     }
 
+    @Cacheable(value = "pros")
+    @Override
+    public List<Product> findProductByPage(ObjectId[] oid, Integer currentPage) {
+        Pageable pageable = PageRequest.of(currentPage,10);
+        Query query = new Query();
+        query.with(pageable);
+        query.addCriteria(Criteria.where("images").ne("").not().size(0));
+        query.addCriteria(Criteria.where("_id").in(oid));
+        List<Product> products = mongoTemplate.find(query, Product.class);
+        return products;
+    }
+
     @Override
     public Double getRate() {
         //查询汇率
@@ -97,4 +112,5 @@ public class ProductRepositoryImpl implements ProductRepository {
         List<Product> mappedResults = detailResults.getMappedResults();
         return mappedResults;
     }
+
 }
