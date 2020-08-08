@@ -68,6 +68,11 @@ public class ProductRepositoryImpl implements ProductRepository {
         Query query = new Query();
         query.addCriteria(Criteria.where("images").ne("").not().size(0));
         query.addCriteria(Criteria.where("_id").in(oid));
+        query.fields().include("priceRMB");
+        query.fields().include("brandName");
+        query.fields().include("priceOff");
+        query.fields().include("price");
+        query.fields().include("images");
         List<Product> products = mongoTemplate.find(query, Product.class);
         return products;
     }
