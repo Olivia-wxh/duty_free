@@ -58,6 +58,17 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public List<Product> findByBrandName(String s) {
         Query query = new Query(Criteria.where("brandName").is(s));
+        Pageable pageable = PageRequest.of(0,3);
+        query.addCriteria(Criteria.where("images").ne("").not().size(0));
+        query.fields().include("priceRMB");
+        query.fields().include("brandName");
+        query.fields().include("priceOff");
+        query.fields().include("price");
+        query.fields().include("images");
+        query.fields().include("productName");
+        query.fields().include("dollar");
+        query.fields().include("rmb");
+        query.with(pageable);
         List<Product> products = mongoTemplate.find(query, Product.class);
         return products;
     }
@@ -65,6 +76,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Cacheable(value = "pros")
     @Override
     public List<Product> findProductByBrand(ObjectId[] oid) {
+        Pageable pageable = PageRequest.of(0,3);
         Query query = new Query();
         query.addCriteria(Criteria.where("images").ne("").not().size(0));
         query.addCriteria(Criteria.where("_id").in(oid));
@@ -73,6 +85,7 @@ public class ProductRepositoryImpl implements ProductRepository {
         query.fields().include("priceOff");
         query.fields().include("price");
         query.fields().include("images");
+        query.with(pageable);
         List<Product> products = mongoTemplate.find(query, Product.class);
         return products;
     }

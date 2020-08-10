@@ -71,7 +71,7 @@ public class TopicController {
   @ApiImplicitParam(name = "currentPage", value = "当前页数")
   public JSONObject getTopicWithProduct(@RequestParam Integer currentPage) {
     System.out.println("start-time:" + System.currentTimeMillis());
-    Integer pageSize = 10;
+    Integer pageSize = 5;
     JSONObject in = new JSONObject();
 //    List<Topic> topicList = topicService.getTopicWithProduct();
     //查找专题
