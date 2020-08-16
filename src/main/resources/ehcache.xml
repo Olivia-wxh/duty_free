@@ -6,4 +6,9 @@
            timeToLiveSeconds="600">
     </cache>
 
+    <cache name="pages"
+           maxEntriesLocalHeap="200"
+           timeToLiveSeconds="600">
+    </cache>
+
 </ehcache>

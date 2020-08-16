@@ -20,6 +20,8 @@ public interface ProductRepository {
 
   List<Product> findProductByBrand(ObjectId[] oid);
 
+//  List<Product> findProductByBrandLimit(ObjectId[] oid);
+
   List<Product> findProductByPage(ObjectId[] oid, Integer currentPage);
 
   Double getRate();
