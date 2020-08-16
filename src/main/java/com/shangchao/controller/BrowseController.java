@@ -47,7 +47,7 @@ public class BrowseController {
     }
 
     /**
-     * 查询浏览的商品的接口
+     * 查询浏览的商品的接口（方案1）
      */
     @GetMapping("/find")
     @ApiOperation(value = "查询浏览的商品的接口")
