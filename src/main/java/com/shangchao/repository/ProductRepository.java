@@ -27,4 +27,6 @@ public interface ProductRepository {
   Double getRate();
 
   List<Product> queryProductPageList(ScProductQueryDto queryDto);
+
+  List<Product> findByBrandNameUnlimit(String s);
 }

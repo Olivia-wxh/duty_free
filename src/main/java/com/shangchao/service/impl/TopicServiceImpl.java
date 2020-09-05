@@ -246,7 +246,7 @@ public class TopicServiceImpl implements TopicService {
         List<String> brands = productRepository.getBrands();
         if (!CollectionUtils.isEmpty(brands)) {
             for (int i = 0; i < brands.size(); i++) {
-                List<Product> proAll = productRepository.findByBrandName(brands.get(i));
+                List<Product> proAll = productRepository.findByBrandNameUnlimit(brands.get(i));
                 Topic topic = new Topic();
                 topic.setTopicName(brands.get(i));
                 //设置图片
