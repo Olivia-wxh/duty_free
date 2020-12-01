@@ -75,4 +75,29 @@ public class ProductController {
           return ResponseUtil.success(product);
       }
 
+      /**
+     * 获取所有品牌
+     *
+     * @return
+     */
+      @GetMapping("/getbrands")
+      @ApiOperation("获取所有品牌")
+      public JSONObject getBrands() {
+          List<String> brands = productService.getBrands();
+          return ResponseUtil.success(brands);
+      }
+
+    /**
+     * 按品牌名称模糊查询
+     *
+     * @return
+     */
+    @GetMapping("/brandName")
+    @ApiOperation("按品牌名称模糊查询")
+    @ApiImplicitParam(name = "brandName", value = "品牌名称", required = true)
+    public JSONObject getBrandsWithName(String brandName) {
+        List<String> brands = productService.getBrandsWithName(brandName);
+        return ResponseUtil.success(brands);
+    }
+
 }

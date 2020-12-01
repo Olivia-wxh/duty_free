@@ -21,7 +21,7 @@ import java.util.List;
 {
     @CompoundIndex(name = "_id",def = "{'id':1}")
 })
-public class Product implements Serializable {
+public class Product implements Serializable, Comparable {
 
     @ApiModelProperty(value = "产品id")
     @Id // 在属性上添加@Filed注解，值为对应的字段名
@@ -116,4 +116,19 @@ public class Product implements Serializable {
     @ApiModelProperty(value = "折后人民币价格")
     private Double rmb;
 
+    @Override
+    public int compareTo(Object o) {
+        String s1 = this.brandName.toLowerCase();
+        String s2 = ((Product) o).getBrandName().toLowerCase();
+        for (int i = 0; i < s1.length()-1; i++) {
+            if (s1.substring(i, i+1).compareTo(s2.substring(i, i+1)) > 0) {
+                return 1;
+            } else if (s1.substring(i, i+1).compareTo(s2.substring(i, i+1)) == 0) {
+                continue;
+            } else {
+                return -1;
+            }
+        }
+        return 0;
+    }
 }

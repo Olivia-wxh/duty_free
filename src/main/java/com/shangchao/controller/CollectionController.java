@@ -58,8 +58,8 @@ public class CollectionController {
             @ApiImplicitParam(name = "topicId", value = "专题id", required = true)
     })
     public JSONObject saveCollectionTopic(@RequestBody JSONObject params){
-        String userId = params.getString("userId").toString();
-        String topicId = params.getString("topicId").toString();
+        String userId = params.getString("userId");
+        String topicId = params.getString("topicId");
         CollectTopic collectTopic = collectionService.saveCollectionTopic(userId, topicId);
         if (collectTopic == null) {
             //收藏失败

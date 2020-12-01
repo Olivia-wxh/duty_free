@@ -20,8 +20,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class ProductRepositoryImpl implements ProductRepository {
@@ -45,7 +44,13 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public List<String> getBrands() {
-        List<String> distinct = mongoTemplate.findDistinct(new Query(), "brandName", "sc_product", String.class);
+        List<String> distinct = mongoTemplate.findDistinct(new Query().with(Sort.by(Sort.Order.asc("brandName"))), "brandName", "sc_product", String.class);
+        Collections.sort(distinct, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.toLowerCase().compareTo(o2.toLowerCase());
+            }
+        });
         return distinct;
     }
 
@@ -149,6 +154,19 @@ public class ProductRepositoryImpl implements ProductRepository {
         AggregationResults<Product> detailResults = mongoTemplate.aggregate(aggregation, "sc_product", Product.class);
         List<Product> mappedResults = detailResults.getMappedResults();
         return mappedResults;
+    }
+
+    @Override
+    public List<String> getBrandsWithName(String brandName) {
+        Query query = new Query(Criteria.where("brandName").regex(brandName));
+        List<String> distinct = mongoTemplate.findDistinct(query, "brandName", "sc_product", String.class);
+        Collections.sort(distinct, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.toLowerCase().compareTo(o2.toLowerCase());
+            }
+        });
+        return distinct;
     }
 
 }

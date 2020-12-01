@@ -12,4 +12,8 @@ public interface ProductService {
     List<Product> getByTopic(String topicId, Integer currentPage);
 
     List<Product> queryProductPageList(ScProductQueryDto queryDto);
+
+    List<String> getBrands();
+
+    List<String> getBrandsWithName(String brandName);
 }

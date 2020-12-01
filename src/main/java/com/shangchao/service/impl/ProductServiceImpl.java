@@ -83,5 +83,17 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.queryProductPageList(queryDto);
     }
 
+    @Override
+    public List<String> getBrands() {
+        List<String> brands = productRepository.getBrands();
+        return brands;
+    }
+
+    @Override
+    public List<String> getBrandsWithName(String brandName) {
+        List<String> brands = productRepository.getBrandsWithName(brandName);
+        return brands;
+    }
+
 
 }
