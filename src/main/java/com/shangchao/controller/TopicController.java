@@ -111,8 +111,8 @@ public class TopicController {
 //    UpdateResult topic = topicService.setTopic(topicId, productId);
 //    return ResponseUtil.success(topic);
 //  }
-
   @GetMapping("/resetTopic")
+  @ApiOperation("品牌下的商品处理")
   public void resetTopic(){
     topicService.resetTopic();
   }

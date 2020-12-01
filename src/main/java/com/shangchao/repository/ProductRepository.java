@@ -29,4 +29,6 @@ public interface ProductRepository {
   List<Product> queryProductPageList(ScProductQueryDto queryDto);
 
   List<String> getBrandsWithName(String brandName);
+
+  List<Product> findByBrandNameUnlimit(String s);
 }

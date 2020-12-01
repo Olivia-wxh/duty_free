@@ -169,4 +169,22 @@ public class ProductRepositoryImpl implements ProductRepository {
         return distinct;
     }
 
+    @Override
+    public List<Product> findByBrandNameUnlimit(String s) {
+        Query query = new Query(Criteria.where("brandName").is(s));
+        Pageable pageable = PageRequest.of(0,500);
+        query.addCriteria(Criteria.where("images").ne("").not().size(0));
+        query.fields().include("priceRMB");
+        query.fields().include("brandName");
+        query.fields().include("priceOff");
+        query.fields().include("price");
+        query.fields().include("images");
+        query.fields().include("productName");
+        query.fields().include("dollar");
+        query.fields().include("rmb");
+        query.with(pageable);
+        List<Product> products = mongoTemplate.find(query, Product.class);
+        return products;
+    }
+
 }
