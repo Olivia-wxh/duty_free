@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.shangchao.entity.Product;
 import com.shangchao.entity.dto.ScProductQueryDto;
 import com.shangchao.service.ProductService;
+import com.shangchao.service.SystemService;
 import com.shangchao.utils.ResponseUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +29,8 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Resource
+    private SystemService systemService;
 
     //    /**
     //     * 查询所有产品信息
@@ -87,8 +91,17 @@ public class ProductController {
       @GetMapping("/getbrands")
       @ApiOperation("获取所有品牌")
       public JSONObject getBrands() {
+          JSONObject jo = new JSONObject();
           List<String> brands = productService.getBrands();
-          return ResponseUtil.success(brands);
+          Set<String> first_letter = new HashSet<>();
+          if (brands.size() > 0) {
+              brands.forEach(word -> {
+                  first_letter.add(word.substring(0,1));
+              });
+          }
+          jo.put("first_letter", first_letter);
+          jo.put("brands_name", brands);
+          return ResponseUtil.success(jo);
       }
 
     /**
@@ -99,9 +112,10 @@ public class ProductController {
     @GetMapping("/brandName")
     @ApiOperation("按品牌名称模糊查询")
     @ApiImplicitParam(name = "brandName", value = "品牌名称", required = true)
-    public JSONObject getBrandsWithName(String brandName) {
+    public JSONObject getBrandsWithName(String brandName, String userId) {
         addHotWord(brandName);
         List<String> brands = productService.getBrandsWithName(brandName);
+        Boolean b = systemService.saveHistory(brandName, userId);
         return ResponseUtil.success(brands);
     }
 

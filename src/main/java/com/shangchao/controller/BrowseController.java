@@ -7,6 +7,7 @@ import com.shangchao.entity.BrowseProduct;
 import com.shangchao.entity.BrowseTopic;
 import com.shangchao.entity.CollectTopic;
 import com.shangchao.service.BrowseService;
+import com.shangchao.service.SystemService;
 import com.shangchao.utils.ResponseUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
