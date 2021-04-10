@@ -1,5 +1,6 @@
 package com.shangchao.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.shangchao.entity.Product;
 import com.shangchao.entity.dto.ScProductQueryDto;
@@ -18,5 +19,5 @@ public interface ProductService {
 
     List<String> getBrandsWithName(String brandName);
 
-    JSONObject getBrandsByName(String brandName);
+    JSONArray getBrandsByName(String brandName);
 }

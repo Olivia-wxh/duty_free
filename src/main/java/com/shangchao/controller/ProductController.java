@@ -1,5 +1,6 @@
 package com.shangchao.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.shangchao.entity.Product;
 import com.shangchao.entity.Topic;
@@ -122,7 +123,7 @@ public class ProductController {
         addHotWord(brandName);
         JSONObject jo = new JSONObject();
 //        List<String> brands = productService.getBrandsWithName(brandName);
-        JSONObject brands = productService.getBrandsByName(brandName);
+        JSONArray brands = productService.getBrandsByName(brandName);
         return ResponseUtil.success(brands);
     }
 
