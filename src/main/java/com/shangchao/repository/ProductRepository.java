@@ -31,4 +31,6 @@ public interface ProductRepository {
   List<String> getBrandsWithName(String brandName);
 
   List<Product> findByBrandNameUnlimit(String s);
+
+  List<Product> getBrandsByName(String brandName);
 }

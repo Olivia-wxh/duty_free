@@ -35,4 +35,10 @@ public class ResponseUtil {
         result.put("msg", msg);
         return result;
     }
+
+    public static JSONObject status(Boolean msg) {
+        JSONObject result = new JSONObject();
+        result.put("msg", msg);
+        return result;
+    }
 }

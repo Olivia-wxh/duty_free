@@ -8,6 +8,7 @@ import com.shangchao.entity.Product;
 import com.shangchao.entity.Topic;
 import com.shangchao.entity.dto.ScProductQueryDto;
 import com.shangchao.repository.ProductRepository;
+import org.apache.commons.collections.map.HashedMap;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -166,6 +167,13 @@ public class ProductRepositoryImpl implements ProductRepository {
                 return o1.toLowerCase().compareTo(o2.toLowerCase());
             }
         });
+        return distinct;
+    }
+
+    @Override
+    public List<Product> getBrandsByName(String brandName) {
+        Query query = new Query(Criteria.where("brandName").regex(brandName));
+        List<Product> distinct = mongoTemplate.find(query, Product.class);
         return distinct;
     }
 

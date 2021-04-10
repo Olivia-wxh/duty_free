@@ -1,5 +1,6 @@
 package com.shangchao.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.shangchao.entity.ExchangeRate;
 import com.shangchao.entity.Product;
 import com.shangchao.entity.Topic;
@@ -8,13 +9,16 @@ import com.shangchao.repository.ProductRepository;
 import com.shangchao.repository.TopicRepository;
 import com.shangchao.service.ProductService;
 import com.shangchao.utils.BeanUtil;
+import org.apache.commons.collections.map.HashedMap;
 import org.bson.types.ObjectId;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -93,6 +97,21 @@ public class ProductServiceImpl implements ProductService {
     public List<String> getBrandsWithName(String brandName) {
         List<String> brands = productRepository.getBrandsWithName(brandName);
         return brands;
+    }
+
+    @Override
+    public JSONObject getBrandsByName(String brandName) {
+        List<Product> brands = productRepository.getBrandsByName(brandName);
+        //根据brandName去重
+        Map<String, String> map = new HashMap();
+        if (brands != null) {
+            for (int i = 0; i < brands.size(); i++) {
+                map.put(brands.get(i).getBrandName(), brands.get(i).getBrandId());
+            }
+        }
+        String str = JSONObject.toJSONString(map);
+        JSONObject jo = JSONObject.parseObject(str);
+        return jo;
     }
 
 

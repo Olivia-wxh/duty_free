@@ -2,9 +2,11 @@ package com.shangchao.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.shangchao.entity.Product;
+import com.shangchao.entity.Topic;
 import com.shangchao.entity.dto.ScProductQueryDto;
 import com.shangchao.service.ProductService;
 import com.shangchao.service.SystemService;
+import com.shangchao.service.TopicService;
 import com.shangchao.utils.ResponseUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/product")
@@ -31,6 +34,8 @@ public class ProductController {
     private ProductService productService;
     @Resource
     private SystemService systemService;
+    @Resource
+    private TopicService topicService;
 
     //    /**
     //     * 查询所有产品信息
@@ -93,13 +98,14 @@ public class ProductController {
       public JSONObject getBrands() {
           JSONObject jo = new JSONObject();
           List<String> brands = productService.getBrands();
-          Set<String> first_letter = new HashSet<>();
+          List<String> first_letter = new ArrayList<>();
           if (brands.size() > 0) {
               brands.forEach(word -> {
-                  first_letter.add(word.substring(0,1));
+                  first_letter.add(word.substring(0,1).toUpperCase());
               });
           }
-          jo.put("first_letter", first_letter);
+          List<String> fl = first_letter.stream().distinct().collect(Collectors.toList());
+          jo.put("first_letter", fl);//既要去重也要与brands顺序一致
           jo.put("brands_name", brands);
           return ResponseUtil.success(jo);
       }
@@ -114,9 +120,24 @@ public class ProductController {
     @ApiImplicitParam(name = "brandName", value = "品牌名称", required = true)
     public JSONObject getBrandsWithName(String brandName, String userId) {
         addHotWord(brandName);
-        List<String> brands = productService.getBrandsWithName(brandName);
-        Boolean b = systemService.saveHistory(brandName, userId);
+        JSONObject jo = new JSONObject();
+//        List<String> brands = productService.getBrandsWithName(brandName);
+        JSONObject brands = productService.getBrandsByName(brandName);
         return ResponseUtil.success(brands);
+    }
+
+    /**
+     * 添加历史搜索词汇
+     *
+     * @return
+     */
+    @GetMapping("/add_search")
+    @ApiOperation("添加历史搜索词汇")
+    @ApiImplicitParam(name = "brandName", value = "品牌名称", required = true)
+    public JSONObject addSearchWord(String brandName, String userId) {
+        addHotWord(brandName);
+        Boolean b = systemService.saveHistory(brandName, userId);
+        return ResponseUtil.status(b);
     }
 
     /**热搜
@@ -164,7 +185,9 @@ public class ProductController {
             String hotWord = (String)typedTuple.getValue();
 //            int score = (int) Math.ceil(typedTuple.getScore());
 //            HotWord hotWord = new HotWord(score,value);
-            hotWordList.add(hotWord);
+            if (hotWord != null && !"".equals(hotWord)) {
+                hotWordList.add(hotWord);
+            }
             if ( flag >= 10 ) break;
         }
         return ResponseUtil.success(hotWordList);
