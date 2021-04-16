@@ -35,8 +35,6 @@ public class ProductController {
     private ProductService productService;
     @Resource
     private SystemService systemService;
-    @Resource
-    private TopicService topicService;
 
     //    /**
     //     * 查询所有产品信息
