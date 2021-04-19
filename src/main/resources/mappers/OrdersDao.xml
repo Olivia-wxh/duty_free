@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangchao.dao.IOrdersDAO">
+
+    <resultMap id="OrderResult" type="com.shangchao.entity.Orders">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="brandId" column="brand_id"/>
+        <result property="brandName" column="brand_name"/>
+        <result property="unitPrice" column="unit_price"/>
+        <result property="count" column="count"/>
+        <result property="price" column="price"/>
+        <result property="address" column="address"/>
+        <result property="year" column="year"/>
+        <result property="month" column="month"/>
+        <result property="imagesid" column="imagesid"/>
+        <collection property="imagesList" column="product_id" javaType="ArrayList"
+                    ofType="com.shangchao.entity.StockImages"
+                    select="com.shangchao.dao.IStockImagesDAO.selectByProductId">
+        </collection>
+    </resultMap>
+
+    <select id="findAll" parameterType="java.lang.String" resultMap="OrderResult">
+        SELECT *
+        FROM orders
+        where user_id = #{userId}
+    </select>
+
+    <insert id="save" parameterType="com.shangchao.entity.Orders">
+        INSERT INTO orders (user_id, product_id, product_name, brand_id, brand_name, unit_price, address, count, year, month)
+        values(#{userId}, #{productId},#{productName},#{brandId},#{brandName},#{unitPrice},#{address},#{count}, #{year}, #{month})
+    </insert>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from orders
+        where id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="OrderResult">
+        select * from orders
+        where id = #{id}
+    </select>
+
+</mapper>

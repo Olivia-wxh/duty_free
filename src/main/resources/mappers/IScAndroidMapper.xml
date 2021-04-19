@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangchao.dao.IScAndroidDAO">
+
+    <resultMap id="androidMap" type="com.shangchao.entity.ScAndroid">
+        <id property="id" column="id"/>
+        <result property="downloadUrl" column="download_url"/>
+        <result property="versionCode" column="version_code"/>
+        <result property="updateInfo" column="update_info"/>
+    </resultMap>
+
+    <insert id="update">
+        update  sc_android set download_url = #{downloadUrl},
+        version_code = #{versionCode}, update_info = #{updateInfo}
+    </insert>
+
+    <select id="getAndroidInfo" resultMap="androidMap">
+        SELECT * FROM sc_android where id = 1
+    </select>
+</mapper>

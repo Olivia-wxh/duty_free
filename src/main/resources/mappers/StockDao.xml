@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangchao.dao.IStockDAO">
+
+    <resultMap id="StockResult" type="com.shangchao.entity.Stock">
+        <id property="id" column="id"/>
+        <result property="productId" column="product_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="brandId" column="brand_id"/>
+        <result property="brandName" column="brand_name"/>
+        <result property="unitPrice" column="unit_price"/>
+        <result property="infos" column="infos"/>
+        <result property="count" column="count"/>
+        <result property="imagesid" column="imagesid"/>
+        <collection property="imagesList" column="product_id" javaType="ArrayList"
+                    ofType="com.shangchao.entity.StockImages"
+                    select="com.shangchao.dao.IStockImagesDAO.selectByProductId">
+        </collection>
+    </resultMap>
+
+    <select id="findAll" resultMap="StockResult">
+        SELECT *
+        FROM stock
+    </select>
+
+    <insert id="save" parameterType="com.shangchao.entity.Stock">
+        INSERT INTO stock (product_id, product_name, brand_id, brand_name, unit_price, infos, count)
+        values( #{productId},#{productName},#{brandId},#{brandName},#{unitPrice},#{infos},#{count})
+    </insert>
+
+    <update id="update" parameterType="com.shangchao.entity.Stock">
+        update stock set product_id = #{productId}, product_name = #{productName},
+         brand_id = #{brandId}, brand_name = #{brandName}, unit_price = #{unitPrice},
+          infos = #{infos}, count = #{count}
+          where  id = #{id}
+    </update>
+
+    <delete id="deleteByProductId" parameterType="java.lang.String">
+        delete from stock
+        where product_id = #{productId}
+    </delete>
+
+</mapper>

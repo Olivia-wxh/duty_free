@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangchao.dao.IStockImagesDAO">
+
+    <resultMap id="StockResult" type="com.shangchao.entity.StockImages">
+        <id property="id" column="id"/>
+        <result property="productId" column="product_id"/>
+        <result property="imageUrl" column="image_url"/>
+    </resultMap>
+
+    <select id="selectByProductId" parameterType="java.lang.String" resultMap="StockResult">
+        SELECT *
+        FROM stock_images
+        WHERE product_id = #{productId}
+    </select>
+
+    <insert id="save" parameterType="com.shangchao.entity.StockImages">
+        INSERT INTO stock_images(product_id, image_url)
+        values( #{productId}, #{imageUrl})
+    </insert>
+
+    <insert id="saveBatch" parameterType="com.shangchao.entity.StockImages">
+        INSERT INTO stock_images(product_id, image_url)
+        values
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (
+            #{item.productId},
+            #{item.imageUrl}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteByProductId" parameterType="java.lang.String">
+        delete from stock_images
+        where product_id = #{productId}
+    </delete>
+
+</mapper>

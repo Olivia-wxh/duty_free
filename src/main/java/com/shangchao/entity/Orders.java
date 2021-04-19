@@ -1,0 +1,72 @@
+package com.shangchao.entity;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * 账单里的图片查找库存图片就可以了
+ */
+@Data // 使用@Data注解，实体类可以省略get set方法
+@ApiModel // swagger注解
+public class Orders implements Serializable, Comparable {
+
+    @ApiModelProperty(value = "id")
+    private Integer id;
+
+    @ApiModelProperty(value = "userId")
+    private String userId;
+
+    @ApiModelProperty(value = "产品id")
+    private String productId;
+
+    @ApiModelProperty(value = "产品名称")
+    private String productName;
+
+    @ApiModelProperty(value = "品牌ID")
+    private String brandId;
+
+    @ApiModelProperty(value = "品牌名称")
+    private String brandName;
+
+    @ApiModelProperty(value = "单价")
+    private Double unitPrice;
+
+    @ApiModelProperty(value = "数量")
+    private Integer count;
+
+    @ApiModelProperty(value = "总价")
+    private Double price;
+
+    @ApiModelProperty(value = "邮寄地址")
+    private String address;
+
+    @ApiModelProperty(value = "图片src")
+    private List<StockImages> imagesList;
+
+    @ApiModelProperty(value = "年份")
+    private Integer year;
+
+    @ApiModelProperty(value = "月份")
+    private Integer month;
+
+
+    @Override
+    public int compareTo(Object o) {
+        String s1 = this.brandName.toLowerCase();
+        String s2 = ((Orders) o).getBrandName().toLowerCase();
+        for (int i = 0; i < s1.length()-1; i++) {
+            if (s1.substring(i, i+1).compareTo(s2.substring(i, i+1)) > 0) {
+                return 1;
+            } else if (s1.substring(i, i+1).compareTo(s2.substring(i, i+1)) == 0) {
+                continue;
+            } else {
+                return -1;
+            }
+        }
+        return 0;
+    }
+}

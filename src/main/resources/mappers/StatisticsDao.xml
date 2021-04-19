@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangchao.dao.IStatisticsDao">
+
+    <resultMap id="StatisticsResult" type="com.shangchao.entity.Statistics">
+        <id property="id" column="id"/>
+        <result property="salePrice" column="sale_price"/>
+        <result property="profit" column="profit"/>
+        <result property="year" column="year"/>
+        <result property="month" column="month"/>
+    </resultMap>
+
+    <select id="findByTime" parameterType="java.lang.Integer" resultMap="StatisticsResult">
+        SELECT *
+        FROM statistics
+        where year = #{year} and month = #{month}
+    </select>
+
+    <insert id="save" parameterType="com.shangchao.entity.Statistics">
+        INSERT INTO statistics (sale_price, profit, year, month)
+        values(#{salePrice}, #{profit},#{year},#{month})
+    </insert>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from statistics
+        where id = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.shangchao.entity.Statistics">
+        update statistics set sale_price = #{salePrice}, profit = #{profit}
+        where year = #{year} and month = #{month}
+    </update>
+
+    <select id="findStatistics" parameterType="java.lang.Integer" resultMap="StatisticsResult">
+        SELECT *
+        FROM statistics and month = #{month}
+    </select>
+
+</mapper>
